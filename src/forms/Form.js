@@ -359,18 +359,25 @@ export const Form = () => {
 
                     {achievement.map((element, index) => {
                         return (<div key={index}>
+                        <div>
                             <span className="form__label">
                                 title:
                             </span>
                             <input type="text" name="title" value={element.title || ""} onChange={(e) => handleaddremove(e, index)} className="form_input" placeholder="Enter Title" />
                             {element.titlecheck && <p style={{ color: "red" }}>{element.titlecheck}</p>}
+                            </div>
+                            <div>
                             <span className="form__label">
                                 <br />
                                 Date:
                             </span>
                             <input type="text" name="date" value={element.date || ""} onChange={(e) => handleaddremove(e, index)} className="form_input" placeholder="Enter Date" />
                             {element.datecheck && <p style={{ color: "red" }}>{element.datecheck}</p>}
+                            </div>
+                            <div>
                             <p className="addremove" onClick={() => removefield(index)}>Remove Field</p>
+                            
+                            </div>
                             {/* <button onClick={removefield}> Remove Field</button><br/> */}
                         </div>)
 
