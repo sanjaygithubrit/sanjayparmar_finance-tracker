@@ -7,7 +7,7 @@ import { Route, Routes} from 'react-router-dom';
   import  User1 from './pages/User/User';
   import Post1 from './pages/Post/Post';
   import { Form } from './forms/Form';
-
+import {Addtransaction} from './Finance/Addtransaction'
 const App = () => {
   
   return (
@@ -20,7 +20,7 @@ const App = () => {
        <Route  path='/' element={<User1 />}/> 
         <Route  path='/user-post' element={<Post1 />}/>  
         <Route  path='/form' element={<Form />}/> 
-  
+        <Route  path='/addtransaction' element={<Addtransaction />}/> 
     </Routes>
     </div>
     

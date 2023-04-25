@@ -3,8 +3,6 @@ import "./form.css"
 
 export const Form = () => {
 
-
-
     const [values, setValues] = useState({
         firstname: "",
         lastname: "",
@@ -15,8 +13,6 @@ export const Form = () => {
         city: "",
         address: "",
         gender: "",
-
-
     });
     const [interest, setInterest] = useState([])
     const [error, setError] = useState({})

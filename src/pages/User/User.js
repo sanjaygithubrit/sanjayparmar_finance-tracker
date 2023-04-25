@@ -12,7 +12,7 @@ const User1 = () => {
 
   console.log("gsdefwsdgsdgsdefg");
   const fetchData = () => {
-    return fetch("https://jsonplaceholder.typicode.com/users")
+    return fetch("https://jsonplaceholder.typicode.com/users")  
       .then((response) => response.json())
       .then((data) => setUser(data));
   };
@@ -25,6 +25,7 @@ const User1 = () => {
   }, []);
 
   return (
+
     <div className="Main">
       <table className="usertable">
         <thead>
