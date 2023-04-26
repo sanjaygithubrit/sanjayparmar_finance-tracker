@@ -2,8 +2,12 @@ import React, { useState,useEffect } from "react";
 // import Dropdown from "./Dropdown";
 import validation  from "./validation";
 import { Link } from "react-router-dom";
-// import { Alltransaction } from "./Alltransaction"; ''
+
 export const Addtransaction = () => {
+
+
+
+
 
     const [transaction, setTransaction] = useState({
         transactiondate: "",
@@ -36,14 +40,7 @@ export const Addtransaction = () => {
           console.debug("file stored",base64);
         });
     };
-    // const [localtransaction, setLoacaltransaction] = useState([])
-
-    // useEffect(() => {
-    //     // console.log(typeof localtransaction,"pppp");
-
-    //     setLoacaltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
-    //   }, []);
-// console.log(typeof localtransaction,"ll ")
+ 
     const month = [
         
         { value: 'Jan 2023', label: 'Jan 2023' },
@@ -86,33 +83,19 @@ export const Addtransaction = () => {
         { value: 'Big Block', label: 'Big Block' },
     ];
 
-  
-
-
-
-
-
-
     function handleinput(event) {
         const newobj = { ...transaction, [event.target.name]: event.target.value }
         setTransaction(newobj)
         
     }
 
-
-
-
-
-
     function submitform(e) {
         e.preventDefault()
          setError(validation(transaction))
 
+         
 
     }
-
-
-
 
     return (
         <>
@@ -138,7 +121,7 @@ export const Addtransaction = () => {
                             Month Year:
                         </span>
                         <select name="month" onChange={handleinput}>
-                        <option selected disabled>Select month </option>
+                        <option  disabled>Select month </option>
                             {month.map((k) => (
                                 <option key={k.label} value={k.value}>
                                     {k.label}
@@ -155,7 +138,7 @@ export const Addtransaction = () => {
                             Transaction type:
                         </span>
                         <select name="transactiontype" onChange={handleinput}>
-                        <option selected disabled>Select Transaction type </option>
+                        <option  disabled>Select Transaction type </option>
                             {transactiontype.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
@@ -176,7 +159,7 @@ export const Addtransaction = () => {
                             From Account
                         </span>
                         <select name="fromaccount" onChange={handleinput}>
-                        <option selected disabled>Select From account </option>
+                        <option  disabled>Select From account </option>
                             {fromaccount.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
@@ -194,7 +177,7 @@ export const Addtransaction = () => {
                         toaccount
                         </span>
                         <select name="toaccount" onChange={handleinput}>
-                        <option selected disabled>Select Toaccount </option>
+                        <option  disabled>Select Toaccount </option>    
                             {toaccount.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
@@ -216,8 +199,11 @@ export const Addtransaction = () => {
                     </div>
                     <br />
                     <div>
-                        <span  className="form__label"> Receipt</span>
-                        <input type="file" name="receipt" onChange={imageUpload} />
+                    <label htmlFor="fromfile">
+                    Receipt
+                    </label>
+                        {/* <span  className="form__label"> Receipt</span> */}
+                        <input type="file" name="receipt" id="fromfile" onChange={imageUpload} />
                         {error.receipt && <p style={{ color: "red" }}>{error.receipt}</p>}
                     </div>
                     <br/>
@@ -230,14 +216,11 @@ export const Addtransaction = () => {
 
                     </div>
                     <br />
-
-
-
-                    <button type="submit"> Submit</button>
+                    <button type="submit"> Submit</button>                                             
                 </form>
             </div>
 
-            <Link to="/alltransaction" > Alltransaction </Link>
+            <Link to="/alltransaction" > Alltransaction </Link>      
         </>
 
     )
