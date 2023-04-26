@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 // import Dropdown from "./Dropdown";
 import validation  from "./validation";
+import { Link } from "react-router-dom";
+// import { Alltransaction } from "./Alltransaction"; ''
 export const Addtransaction = () => {
 
     const [transaction, setTransaction] = useState({
@@ -14,8 +16,36 @@ export const Addtransaction = () => {
         notes: "",
     });
 
+    const [error, setError] = useState({})
 
+    const getBase64 = (file) => {
+        return new Promise((resolve,reject) => {
+           const reader = new FileReader();
+           reader.onload = () => resolve(reader.result);
+           reader.onerror = error => reject(error);
+           reader.readAsDataURL(file);
+        });
+      } 
+
+    const imageUpload = (e) => {
+        const file = e.target.files[0];
+        getBase64(file).then(base64 => {
+            const newobj = { ...transaction, receipt: base64 }
+        setTransaction(newobj)
+         console.log(base64,"base64");
+          console.debug("file stored",base64);
+        });
+    };
+    // const [localtransaction, setLoacaltransaction] = useState([])
+
+    // useEffect(() => {
+    //     // console.log(typeof localtransaction,"pppp");
+
+    //     setLoacaltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
+    //   }, []);
+// console.log(typeof localtransaction,"ll ")
     const month = [
+        
         { value: 'Jan 2023', label: 'Jan 2023' },
         { value: 'Feb 2023', label: 'Feb 2023' },
         { value: 'Mar 2023', label: 'Mar 2023' },
@@ -56,7 +86,7 @@ export const Addtransaction = () => {
         { value: 'Big Block', label: 'Big Block' },
     ];
 
-    const [error, setError] = useState({})
+  
 
 
 
@@ -66,117 +96,11 @@ export const Addtransaction = () => {
     function handleinput(event) {
         const newobj = { ...transaction, [event.target.name]: event.target.value }
         setTransaction(newobj)
-        // console.log(newobj)
+        
     }
 
 
 
-    // function validation(values, interest, achievement) {
-    //     const error = {}
-    //     const data = [...achievement]
-    //     for (let i = 0; i < data.length; i++) {
-    //         if (data[i].title === "") {
-    //             data[i].titlecheck = "Enter title"
-    //         } else {
-    //             data[i].titlecheck = ""
-    //         }
-    //         if (data[i].date === "") {
-    //             data[i].datecheck = "Enter date"
-    //         } else {
-    //             data[i].datecheck = ""
-    //         }
-
-    //         setAchievement(data)
-    //     }
-
-    //     if (interest.length === 0) {
-
-    //         error.interest = "please check the interest"
-    //     }
-
-    //     if (values.firstname === "") {
-    //         error.firstname = " please enter firstname"
-    //     }
-    //     else if (!isNaN(values.firstname)) {
-    //         error.firstname = "please Enter only char"
-    //     }
-    //     else if (values.firstname.length < 2) {
-    //         error.firstname = "please Enter atleast 2 char"
-    //     }
-
-
-    //     if (values.lastname === "") {
-    //         error.lastname = " please enter lastname"
-    //     }
-    //     else if (!isNaN(values.lastname)) {
-    //         error.lastname = "please Enter only char"
-    //     }
-    //     else if (values.lastname.length < 2) {
-    //         error.lastname = "please Enter atleast 2 char"
-    //     }
-
-    //     if (values.phone === "") {
-    //         error.phone = " please enter phone no"
-    //     }
-    //     else if (values.phone.length < 10) {
-    //         error.phone = "please Enter 10 digit"
-    //     }
-    //     else if (isNaN(values.phone)) {
-    //         error.phone = "please Enter only number"
-    //     }
-
-    //     var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
-    //     if (values.email === "") {
-    //         error.email = " please enter email"
-    //     }
-    //     else if (!values.email.match(mailformat)) {
-    //         error.email = "please Enter valid email"
-    //     }
-
-    //     const max = "1980-31-12"
-
-    //     if (values.dob === "") {
-    //         error.dob = " please enter Dob"
-    //     }
-    //     else if (values.dob > max) {
-    //         error.dob = "please Enter dob less 1980"
-    //     }
-
-    //     if (values.state === "") {
-    //         error.state = " please enter state"
-    //     }
-    //     else if (values.state < 2) {
-    //         error.state = "please Enter atlest 2 char"
-    //     } else if (!isNaN(values.state)) {
-    //         error.firstname = "please Enter only char"
-    //     }
-
-    //     if (values.city === "") {
-    //         error.city = " please enter city"
-    //     }
-    //     else if (values.city < 2) {
-    //         error.city = "please Enter atlest 2 char"
-    //     } else if (!isNaN(values.city)) {
-    //         error.city = "please Enter only char"
-    //     }
-
-    //     if (values.address === "") {
-    //         error.address = " please enter address"
-    //     }
-    //     else if (values.address < 15) {
-    //         error.address = "please Enter atlest 15 char"
-    //     }
-
-    //     if (values.gender === "") {
-    //         error.gender = "Please Provide gender"
-    //     }
-
-
-
-
-    //     return error;
-    // }
 
 
 
@@ -203,7 +127,7 @@ export const Addtransaction = () => {
                             Transaction Date:
                         </span>
                         <input type="Date" name="transactiondate" className="form_input" placeholder="Enter Transaction Date " onChange={handleinput} />
-                        {/* {error.date && <p style={{ color: "red" }}>{error.date}</p>} */}
+                        {error.transactiondate && <p style={{ color: "red" }}>{error.transactiondate}</p>}
 
                     </div>
                    
@@ -214,16 +138,15 @@ export const Addtransaction = () => {
                             Month Year:
                         </span>
                         <select name="month" onChange={handleinput}>
-                            {month.map((key) => (
-                                <option key={key.label} value={key.value}>
-                                    {key.label}
+                        <option selected disabled>Select month </option>
+                            {month.map((k) => (
+                                <option key={k.label} value={k.value}>
+                                    {k.label}
                                 </option>
                             ))}
-                            <option>
-
-                            </option>
+                         
                         </select>
-                        {/* {error.month && <p style={{ color: "red" }}>{error.month}</p>} */}
+                        {error.month && <p style={{ color: "red" }}>{error.month}</p>}
                     </div>
                     <br />
 
@@ -232,16 +155,15 @@ export const Addtransaction = () => {
                             Transaction type:
                         </span>
                         <select name="transactiontype" onChange={handleinput}>
+                        <option selected disabled>Select Transaction type </option>
                             {transactiontype.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
                                 </option>
                             ))}
-                            <option>
-
-                            </option>
+                        
                         </select>
-                        {/* {error.transactiontype && <p style={{ color: "red" }}>{error.transactiontype}</p>} */}
+                        {error.transactiontype && <p style={{ color: "red" }}>{error.transactiontype}</p>}
                     </div>
 
                   
@@ -254,16 +176,15 @@ export const Addtransaction = () => {
                             From Account
                         </span>
                         <select name="fromaccount" onChange={handleinput}>
+                        <option selected disabled>Select From account </option>
                             {fromaccount.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
                                 </option>
                             ))}
-                            <option>
-
-                            </option>
+                         
                         </select>
-                        {/* {error.fromaccount && <p style={{ color: "red" }}>{error.fromaccount}</p>} */}
+                        {error.fromaccount && <p style={{ color: "red" }}>{error.fromaccount}</p>}
                     </div>
 
                     <br/>
@@ -273,16 +194,15 @@ export const Addtransaction = () => {
                         toaccount
                         </span>
                         <select name="toaccount" onChange={handleinput}>
+                        <option selected disabled>Select Toaccount </option>
                             {toaccount.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
                                 </option>
                             ))}
-                            <option>
-
-                            </option>
+                           
                         </select>
-                        {/* {error.toaccount && <p style={{ color: "red" }}>{error.toaccount}</p>} */}
+                        {error.toaccount && <p style={{ color: "red" }}>{error.toaccount}</p>}
                     </div>
 
                     <br />
@@ -291,16 +211,22 @@ export const Addtransaction = () => {
                             Amount:
                         </span>
                         <input type="number" name="amount" className="form_input" placeholder="Enter Amount" onChange={handleinput} />
-                        {/* {error.amount && <p style={{ color: "red" }}>{error.amount}</p>} */}
+                        {error.amount && <p style={{ color: "red" }}>{error.amount}</p>}
 
                     </div>
                     <br />
+                    <div>
+                        <span  className="form__label"> Receipt</span>
+                        <input type="file" name="receipt" onChange={imageUpload} />
+                        {error.receipt && <p style={{ color: "red" }}>{error.receipt}</p>}
+                    </div>
+                    <br/>
                     <div>
                         <span className="form__label">
                             Notes
                         </span>
                         <textarea placeholder="Enter Address" name="notes" onChange={handleinput} ></textarea>
-                        {/* {error.notes && <p style={{ color: "red" }}>{error.notes}</p>} */}
+                        {error.notes && <p style={{ color: "red" }}>{error.notes}</p>}
 
                     </div>
                     <br />
@@ -310,6 +236,8 @@ export const Addtransaction = () => {
                     <button type="submit"> Submit</button>
                 </form>
             </div>
+
+            <Link to="/alltransaction" > Alltransaction </Link>
         </>
 
     )
