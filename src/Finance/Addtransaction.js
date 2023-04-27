@@ -92,17 +92,23 @@ export const Addtransaction = () => {
     function submitform(e) {
         e.preventDefault()
          setError(validation(transaction))
-
-         
-
     }
 
     return (
         <>
-            <h1 className="maindiv"> Form </h1>
-            <div className="maindiv">
 
-                <form className="mainform" onSubmit={submitform}>
+        
+        <div className="finance">
+            <h1 className="addmaindiv"> Finance Tracker</h1>
+<div  className="addmaindiv">
+<Link to="/alltransaction"> Alltransaction </Link>    
+</div>
+          </div>
+
+
+            <div className="addtransaction" >
+
+                <form className="addtransactionform" onSubmit={submitform}>
 
 
                     <div>
@@ -121,7 +127,7 @@ export const Addtransaction = () => {
                             Month Year:
                         </span>
                         <select name="month" onChange={handleinput}>
-                        <option  disabled>Select month </option>
+                        <option selected>Select month </option>
                             {month.map((k) => (
                                 <option key={k.label} value={k.value}>
                                     {k.label}
@@ -138,7 +144,7 @@ export const Addtransaction = () => {
                             Transaction type:
                         </span>
                         <select name="transactiontype" onChange={handleinput}>
-                        <option  disabled>Select Transaction type </option>
+                        <option  selected>Select Transaction type </option>
                             {transactiontype.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
@@ -159,13 +165,12 @@ export const Addtransaction = () => {
                             From Account
                         </span>
                         <select name="fromaccount" onChange={handleinput}>
-                        <option  disabled>Select From account </option>
+                        <option  selected>Select From account </option>
                             {fromaccount.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
                                 </option>
                             ))}
-                         
                         </select>
                         {error.fromaccount && <p style={{ color: "red" }}>{error.fromaccount}</p>}
                     </div>
@@ -177,7 +182,7 @@ export const Addtransaction = () => {
                         toaccount
                         </span>
                         <select name="toaccount" onChange={handleinput}>
-                        <option  disabled>Select Toaccount </option>    
+                        <option  selected>Select Toaccount </option>    
                             {toaccount.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
@@ -220,7 +225,7 @@ export const Addtransaction = () => {
                 </form>
             </div>
 
-            <Link to="/alltransaction" > Alltransaction </Link>      
+              
         </>
 
     )

@@ -32,7 +32,8 @@ import { Link } from "react-router-dom";
 
             localStorage.setItem('Transaction', JSON.stringify(get));
 
-            <Link to="/alltransaction"> All</Link>
+          
+
         }
 
         return error;
