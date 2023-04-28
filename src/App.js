@@ -9,6 +9,7 @@ import { Route, Routes} from 'react-router-dom';
   import { Form } from './forms/Form';
 import {Addtransaction} from './Finance/Addtransaction'
 import { Alltransaction } from './Finance/Alltransaction';
+import { View } from './Finance/View';
 const App = () => {
   
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route  path='/form' element={<Form />}/> 
         <Route  path='/addtransaction' element={<Addtransaction />}/> 
         <Route  path='/alltransaction' element={<Alltransaction />}/> 
+        <Route  path='/View' element={<View />}/> 
     </Routes>
     </div>
     

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Alltransaction.css";
-import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 
 export const Table = (prop) => {
 
@@ -11,6 +10,15 @@ export const Table = (prop) => {
     useEffect(() => {
         setAlltransaction(prop.all)
     }, [prop.all])
+
+    const navigate = useNavigate();
+
+    function View(alltransaction) {
+
+        navigate("/view",{ state: alltransaction });
+
+    }
+
 
     const sorting = (col) => {
 
@@ -72,6 +80,7 @@ export const Table = (prop) => {
                             <th onClick={() => Amountsorting("amount")}>amount</th>
                             <th>receipt</th>
                             <th onClick={() => sorting("notes")}>notes</th>
+                            <th>View</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,6 +94,7 @@ export const Table = (prop) => {
                                 <td>{new Intl.NumberFormat("en-IN").format(alltransaction.amount)}</td>
                                 <td><img src={alltransaction.receipt} /></td>
                                 <td>{alltransaction.notes}</td>
+                                <td onClick={()=>View(alltransaction)} >View</td>
                             </tr>
                         ))}
 
