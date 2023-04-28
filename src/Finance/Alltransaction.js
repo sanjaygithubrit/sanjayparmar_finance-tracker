@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import "./Alltransaction.css"
+import "./Alltransaction.css";
+import { Link } from "react-router-dom";
 
 
 export const Alltransaction = () => {
@@ -17,12 +18,7 @@ export const Alltransaction = () => {
         { value: 'none', label: 'none' },
     ];
 
-
-
-
     useEffect(() => {
-        // console.log(typeof localtransaction,"pppp");
-
         setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
     }, []);
 
@@ -32,8 +28,6 @@ export const Alltransaction = () => {
         const grouptype = event.target.value;
 
         const groupBy = (array, key) => {
-
-
             let sanjay = array.reduce((result, currentValue) => {
                 // If an array already present for key, push it to the array. Else create an array and push the object
                 (result[currentValue[key]] = result[currentValue[key]] || []).push(
@@ -44,13 +38,10 @@ export const Alltransaction = () => {
             return sanjay;
         };
         const personGroupedByColor = groupBy(alltransaction, grouptype);
-        console.log(personGroupedByColor)
+      
         setGroupby(personGroupedByColor);
         setGrp(false)
     }
-
-
-
 
     const sorting = (col) => {
         
@@ -97,15 +88,16 @@ export const Alltransaction = () => {
             setOrder("ASC")
         }
     }
+
     return (
         <>
-
+    <div className="maingroupby">
                 <div className="groupby">
                     <span className="spangroupby" >
-                        Group By
+                        Group By:
                     </span>
-                    <select name="toaccount" onChange={group}>
-                        <option selected>select...... </option>
+                    <select name="toaccount" defaultValue="default" className="selectbox" onChange={group}>
+                        <option value="default" disabled>select...... </option>
                         {selectgroupby.map((key) => (
                             <option key={key.label} value={key.value}>
                                 {key.label}
@@ -114,7 +106,12 @@ export const Alltransaction = () => {
                     </select>
                 </div>
 
+                <div className="addtransactioninall">
+                    <Link className="groupby" to='/Addtransaction'> Addtransaction </Link>
+                </div>
+    </div>
         <div className="addtransactionmaindiv">
+
             {grp ? <table>
                 <thead>
                     <tr>
@@ -126,6 +123,7 @@ export const Alltransaction = () => {
                         <th onClick={() => Amountsorting("amount")}>amount</th>
                         <th>receipt</th>
                         <th onClick={() => sorting("notes")}>notes</th>
+                      
                     </tr>
                 </thead>
                 <tbody>
@@ -136,18 +134,19 @@ export const Alltransaction = () => {
                             <td>{alltransaction.transactiontype}</td>
                             <td>{alltransaction.fromaccount}</td>
                             <td>{alltransaction.toaccount}</td>
-                            <td> {new Intl.NumberFormat("en-IN").format( alltransaction.amount)}</td>
+                            <td>{new Intl.NumberFormat("en-IN").format( alltransaction.amount)}</td>
                             <td><img src={alltransaction.receipt} /></td>
                             <td>{alltransaction.notes}</td>
                         </tr>
                     ))}
 
-
                 </tbody>
             </table> : <div>
               
                 {Object.values(groupby).map((element, index) =>
+               
                     <div key={index}>
+                    <h1>{Object.keys(groupby)[index]}</h1>
                         <table >
                             <thead>
                                 <tr>
@@ -162,17 +161,17 @@ export const Alltransaction = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {element.map((key, ind) => {
+                                {element.map((element, ind) => {
                                     return (
-                                        <tr key={key} >
-                                            <td>{key.transactiondate}</td>
-                                            <td>{key.month}</td>
-                                            <td>{key.transactiontype}</td>
-                                            <td>{key.fromaccount}</td>
-                                            <td>{key.toaccount}</td>
-                                            <td>{new Intl.NumberFormat("en-IN").format( key.amount)}</td>
-                                            <td><img src={key.receipt} /></td>
-                                            <td>{key.notes}</td>
+                                        <tr key={element} >
+                                            <td>{element.transactiondate}</td>
+                                            <td>{element.month}</td>
+                                            <td>{element.transactiontype}</td>
+                                            <td>{element.fromaccount}</td>
+                                            <td>{element.toaccount}</td>
+                                            <td>{new Intl.NumberFormat("en-IN").format( element.amount)}</td>
+                                            <td><img src={element.receipt} /></td>
+                                            <td>{element.notes}</td>
                                         </tr>
                                     )
                                 })}
@@ -182,9 +181,9 @@ export const Alltransaction = () => {
                   )}
                 </div>
             }
-                
                 </div>
             </>
             
     )
 }
+

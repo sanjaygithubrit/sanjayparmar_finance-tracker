@@ -33,10 +33,28 @@ table{
     font-weight: 600;
     text-align: center;
   }
+  .selectbox{
+    height: 40px;
+    margin-left: 20px;
+  }
   .groupby{
     display: flex;
-    align-items: center;
-    text-align: center;
+    
+    /* align-items: center; */
+    /* text-align: center; */
+  }
+  .addtransactioninall{
+    border: 2px solid black;
+    border-radius: 10px;
+    background-color: antiquewhite;
+    margin-left: 40px;
+    padding: 10px;
+    font-weight: bolder;
+  }
+  .maingroupby{
+    display: flex;
+    justify-content: center;
+padding: 30px;
   }
   .spangroupby{
     font-size: 30px;
