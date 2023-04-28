@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Alltransaction.css";
 import { Link } from "react-router-dom";
+import { Table } from "./Table";
 
 
 export const Alltransaction = () => {
@@ -43,51 +44,51 @@ export const Alltransaction = () => {
         setGrp(false)
     }
 
-    const sorting = (col) => {
+    // const sorting = (col) => {
         
-        if (order === "ASC") {
-            const sorted = [...alltransaction].sort((a, b) =>
-                a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
-            );
-            setAlltransaction(sorted);
-            setOrder("DSC")
-        }
-        if (order === "DSC") {
-            const sorted = [...alltransaction].sort((a, b) =>
-                a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
-            );
-            setAlltransaction(sorted);
-            setOrder("no")
-        }
-        if (order === "no") {
+    //     if (order === "ASC") {
+    //         const sorted = [...alltransaction].sort((a, b) =>
+    //             a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+    //         );
+    //         setAlltransaction(sorted);
+    //         setOrder("DSC")
+    //     }
+    //     if (order === "DSC") {
+    //         const sorted = [...alltransaction].sort((a, b) =>
+    //             a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+    //         );
+    //         setAlltransaction(sorted);
+    //         setOrder("no")
+    //     }
+    //     if (order === "no") {
         
-            setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
-            setOrder("ASC")
-        }
-    }
+    //         setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
+    //         setOrder("ASC")
+    //     }
+    // }
 
-    const Amountsorting = (col) => {
-        if (order === "ASC") {
-            const sorted = [...alltransaction].sort((a, b) => {
-                return a.amount - b.amount
-            }
-            );
-            setAlltransaction(sorted);
-            setOrder("DSC")
-        }
-        if (order === "DSC") {
-            const sorted = [...alltransaction].sort((a, b) => {
-                return b.amount - a.amount
-            }
-            );
-            setAlltransaction(sorted);
-            setOrder("no")
-        }
-        if (order === "no") {
-            setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
-            setOrder("ASC")
-        }
-    }
+    // const Amountsorting = (col) => {
+    //     if (order === "ASC") {
+    //         const sorted = [...alltransaction].sort((a, b) => {
+    //             return a.amount - b.amount
+    //         }
+    //         );
+    //         setAlltransaction(sorted);
+    //         setOrder("DSC")
+    //     }
+    //     if (order === "DSC") {
+    //         const sorted = [...alltransaction].sort((a, b) => {
+    //             return b.amount - a.amount
+    //         }
+    //         );
+    //         setAlltransaction(sorted);
+    //         setOrder("no")
+    //     }
+    //     if (order === "no") {
+    //         setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
+    //         setOrder("ASC")
+    //     }
+    // }
 
     return (
         <>
@@ -112,42 +113,14 @@ export const Alltransaction = () => {
     </div>
         <div className="addtransactionmaindiv">
 
-            {grp ? <table>
-                <thead>
-                    <tr>
-                        <th onClick={() => sorting("transactiondate")}>transactiondate</th>
-                        <th onClick={() => sorting("month")}>month</th>
-                        <th onClick={() => sorting("transactiontype")}>transactiontype</th>
-                        <th onClick={() => sorting("fromaccount")}>fromaccount</th>
-                        <th onClick={() => sorting("toaccount")}>toaccount</th>
-                        <th onClick={() => Amountsorting("amount")}>amount</th>
-                        <th>receipt</th>
-                        <th onClick={() => sorting("notes")}>notes</th>
-                      
-                    </tr>
-                </thead>
-                <tbody>
-                    {alltransaction.map((alltransaction, index) => (
-                        <tr key={index}>
-                            <td>{alltransaction.transactiondate}</td>
-                            <td>{alltransaction.month}</td>
-                            <td>{alltransaction.transactiontype}</td>
-                            <td>{alltransaction.fromaccount}</td>
-                            <td>{alltransaction.toaccount}</td>
-                            <td>{new Intl.NumberFormat("en-IN").format( alltransaction.amount)}</td>
-                            <td><img src={alltransaction.receipt} /></td>
-                            <td>{alltransaction.notes}</td>
-                        </tr>
-                    ))}
-
-                </tbody>
-            </table> : <div>
+            {grp ? <Table all={alltransaction} /> : <div>
               
                 {Object.values(groupby).map((element, index) =>
                
                     <div key={index}>
                     <h1>{Object.keys(groupby)[index]}</h1>
-                        <table >
+                    <Table all={element}/>
+                        {/* <table >
                             <thead>
                                 <tr>
                                     <th>transactiondate</th>
@@ -176,7 +149,7 @@ export const Alltransaction = () => {
                                     )
                                 })}
                                 </tbody>
-                                </table>
+                                </table> */}
                             </div>
                   )}
                 </div>
