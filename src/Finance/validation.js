@@ -40,6 +40,7 @@ import { Link } from "react-router-dom";
             data.push(transaction);
 
             localStorage.setItem('Transaction', JSON.stringify(data));
+            
             } 
             else {
 

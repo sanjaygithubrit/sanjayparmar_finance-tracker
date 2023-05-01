@@ -4,9 +4,12 @@ import { useNavigate } from "react-router-dom";
 
 export const Table = (prop) => {
 
-    
+    const [filterval, setFilval] = useState("")
+    // const [records, setRecords] = useState("")
     const [page, setPage] = useState(1)
     const [alltransaction, setAlltransaction] = useState([])
+    const [alldata, setAlldata] = useState(prop.all)
+
     const [order, setOrder] = useState("ASC")
 
     const pageperrecord = 3;
@@ -21,11 +24,15 @@ export const Table = (prop) => {
     const recordstart = (page - 1) * pageperrecord;
     const recordend = (page) * pageperrecord;
 
-
+    useEffect(() => {
+        setAlldata(prop.all)
+        setAlltransaction(alldata.slice(recordstart, recordend))
+    }, [prop.all])
 
     useEffect(() => {
-        setAlltransaction(prop.all.slice(recordstart, recordend))
-    }, [prop.all, page])
+        setAlltransaction(alldata.slice(recordstart, recordend))
+    }, [page, alldata])
+
 
     const navigate = useNavigate();
 
@@ -48,20 +55,24 @@ export const Table = (prop) => {
     const sorting = (col) => {
 
         if (order === "ASC") {
-            const sorted = [...alltransaction].sort((a, b) =>
+            const sorted = [...prop.all].sort((a, b) =>
                 a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
             );
-            setAlltransaction(sorted);
+            setAlldata(sorted)
+            setAlltransaction(sorted.slice(recordstart, recordend));
             setOrder("DSC")
+
         }
         if (order === "DSC") {
-            const sorted = [...alltransaction].sort((a, b) =>
+            const sorted = [...prop.all].sort((a, b) =>
                 a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
             );
-            setAlltransaction(sorted);
+            setAlldata(sorted)
+            setAlltransaction(sorted.slice(recordstart, recordend));
             setOrder("no")
         }
         if (order === "no") {
+            setAlldata(prop.all)
             setAlltransaction(prop.all.slice(recordstart, recordend))
             setOrder("ASC")
         }
@@ -69,29 +80,52 @@ export const Table = (prop) => {
 
     const Amountsorting = (col) => {
         if (order === "ASC") {
-            const sorted = [...alltransaction].sort((a, b) => {
+            const sorted = [...prop.all].sort((a, b) => {
                 return a.amount - b.amount
             }
             );
-            setAlltransaction(sorted);
+            setAlldata(sorted)
+            setAlltransaction(sorted.slice(recordstart, recordend));
             setOrder("DSC")
         }
         if (order === "DSC") {
-            const sorted = [...alltransaction].sort((a, b) => {
+            const sorted = [...prop.all].sort((a, b) => {
                 return b.amount - a.amount
             }
             );
-            setAlltransaction(sorted);
+            setAlldata(sorted)
+            setAlltransaction(sorted.slice(recordstart, recordend));
             setOrder("no")
         }
         if (order === "no") {
+            setAlldata(prop.all)
             setAlltransaction(prop.all.slice(recordstart, recordend))
             setOrder("ASC")
         }
     }
 
+    const searchVal = (e) => {
+        if (e.target.value === "") {
+
+            setAlltransaction(alldata.slice(recordstart, recordend))
+        } else {
+
+            const searchdata = alldata.filter(item => item.transactiondate.toLowerCase().includes(e.target.value.toLowerCase()) || item.month.toLowerCase().includes(e.target.value.toLowerCase()) || item.transactiontype.toLowerCase().includes(e.target.value.toLowerCase()) || item.fromaccount.toLowerCase().includes(e.target.value.toLowerCase()) || item.toaccount.toLowerCase().includes(e.target.value.toLowerCase()) || item.amount.toLowerCase().includes(e.target.value.toLowerCase()) || item.notes.toLowerCase().includes(e.target.value.toLowerCase()))
+            
+            setAlltransaction(searchdata);
+        }
+        setFilval(e.target.value)
+    }
+
+
+
+
     return (
         <>
+
+            <input value={filterval}
+onInput={(e) => searchVal(e)}
+            ></input>
 
             <div className="addtransactionmaindiv">
                 <table>
@@ -121,7 +155,7 @@ export const Table = (prop) => {
                                 <td><img src={alltransaction.receipt} /></td>
                                 <td>{alltransaction.notes}</td>
                                 <td onClick={() => View(alltransaction)} >View </td>
-                                <td onClick={()=>edit(alltransaction.id)}>Edit</td>
+                                <td onClick={() => edit(alltransaction.id)}>Edit</td>
                             </tr>
                         ))}
 

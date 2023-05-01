@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 // import Dropdown from "./Dropdown";
-import validation from "./validation";
+import Validation from "./validation";
 import { Link, useParams } from "react-router-dom";
+import { Alltransaction } from "./Alltransaction";
 
 export const Addtransaction = () => {
 
@@ -36,6 +37,14 @@ export const Addtransaction = () => {
        
 
 	}, [])
+
+
+    // useEffect(()=>{
+
+     
+    //        setTransaction(transaction)
+    
+    //     }, [transaction])
 
 
     const month = [
@@ -116,9 +125,14 @@ export const Addtransaction = () => {
 
     }
 
+    function removeimage() {
+        const newobj = { ...transaction, receipt: "" }
+        setTransaction(newobj)
+    }
+
     function submitform(e) {
         e.preventDefault()
-        setError(validation(transaction))
+        setError(Validation(transaction))
     }
 
     return (
@@ -228,8 +242,12 @@ export const Addtransaction = () => {
                         <label htmlFor="fromfile" className="form__label">
                             Receipt:
                         </label>
-                        {/* <span  className="form__label"> Receipt</span> */}
-                        <input type="file" name="receipt"  id="fromfile" onChange={imageUpload} />
+                        {transaction.receipt===""?<input type="file" name="receipt"  id="fromfile" onChange={imageUpload} />:<div>
+                        <div onClick={removeimage} > remove</div>
+                        <img src={transaction.receipt} /> 
+                        </div>}
+
+                      
                         {error.receipt && <p style={{ color: "red" }}>{error.receipt}</p>}
                     </div>
                     <br />
