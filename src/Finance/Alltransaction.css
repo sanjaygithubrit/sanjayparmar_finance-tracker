@@ -78,8 +78,18 @@ padding: 30px;
     .addtransactionmaindiv{
   
         display: flex;
+        flex-direction: column;
         align-items: center;
-        /* justify-items: center; */
         justify-content: center;
     }
-    
+    .pagenumber{
+      border: 2px solid black;
+      border-radius: 7px;
+      background-color: antiquewhite;
+      padding: 5px;
+      margin: 5px;
+
+    }
+    .paginationdiv{
+      margin-top: 10px;
+    }

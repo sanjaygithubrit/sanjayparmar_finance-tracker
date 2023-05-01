@@ -7,9 +7,10 @@ import { Table } from "./Table";
 export const Alltransaction = () => {
 
     const [alltransaction, setAlltransaction] = useState([])
+   
     const [order, setOrder] = useState("ASC")
     const [groupby, setGroupby] = useState([])
-    const [grp, setGrp] = useState(true)
+    const [grp, setGrp] = useState(false)
 
     const selectgroupby = [
         { value: 'month', label: 'Month Year' },
@@ -20,6 +21,7 @@ export const Alltransaction = () => {
     ];
 
     useEffect(() => {
+
         setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
     }, []);
 
@@ -39,60 +41,14 @@ export const Alltransaction = () => {
             return sanjay;
         };
         const personGroupedByColor = groupBy(alltransaction, grouptype);
-      
+
         setGroupby(personGroupedByColor);
-        setGrp(false)
+        setGrp(true)
     }
-
-    // const sorting = (col) => {
-        
-    //     if (order === "ASC") {
-    //         const sorted = [...alltransaction].sort((a, b) =>
-    //             a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
-    //         );
-    //         setAlltransaction(sorted);
-    //         setOrder("DSC")
-    //     }
-    //     if (order === "DSC") {
-    //         const sorted = [...alltransaction].sort((a, b) =>
-    //             a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
-    //         );
-    //         setAlltransaction(sorted);
-    //         setOrder("no")
-    //     }
-    //     if (order === "no") {
-        
-    //         setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
-    //         setOrder("ASC")
-    //     }
-    // }
-
-    // const Amountsorting = (col) => {
-    //     if (order === "ASC") {
-    //         const sorted = [...alltransaction].sort((a, b) => {
-    //             return a.amount - b.amount
-    //         }
-    //         );
-    //         setAlltransaction(sorted);
-    //         setOrder("DSC")
-    //     }
-    //     if (order === "DSC") {
-    //         const sorted = [...alltransaction].sort((a, b) => {
-    //             return b.amount - a.amount
-    //         }
-    //         );
-    //         setAlltransaction(sorted);
-    //         setOrder("no")
-    //     }
-    //     if (order === "no") {
-    //         setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
-    //         setOrder("ASC")
-    //     }
-    // }
 
     return (
         <>
-    <div className="maingroupby">
+            <div className="maingroupby">
                 <div className="groupby">
                     <span className="spangroupby" >
                         Group By:
@@ -110,53 +66,24 @@ export const Alltransaction = () => {
                 <div className="addtransactioninall">
                     <Link className="groupby" to='/Addtransaction'> Addtransaction </Link>
                 </div>
-    </div>
-        <div className="addtransactionmaindiv">
+            </div>
+            <div className="addtransactionmaindiv">
 
-            {grp ? <Table all={alltransaction} /> : <div>
-              
-                {Object.values(groupby).map((element, index) =>
-               
-                    <div key={index}>
-                    <h1>{Object.keys(groupby)[index]}</h1>
-                    <Table all={element}/>
-                        {/* <table >
-                            <thead>
-                                <tr>
-                                    <th>transactiondate</th>
-                                    <th>month</th>
-                                    <th>transactiontype</th>
-                                    <th>fromaccount</th>
-                                    <th>toaccount</th>
-                                    <th>amount</th>
-                                    <th>receipt</th>
-                                    <th>notes</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {element.map((element, ind) => {
-                                    return (
-                                        <tr key={element} >
-                                            <td>{element.transactiondate}</td>
-                                            <td>{element.month}</td>
-                                            <td>{element.transactiontype}</td>
-                                            <td>{element.fromaccount}</td>
-                                            <td>{element.toaccount}</td>
-                                            <td>{new Intl.NumberFormat("en-IN").format( element.amount)}</td>
-                                            <td><img src={element.receipt} /></td>
-                                            <td>{element.notes}</td>
-                                        </tr>
-                                    )
-                                })}
-                                </tbody>
-                                </table> */}
-                            </div>
-                  )}
-                </div>
-            }
-                </div>
-            </>
-            
+                {grp ? <div>
+
+                    {Object.values(groupby).map((element, index) =>
+
+                        <div key={index}>
+                            <h1>{Object.keys(groupby)[index]}</h1>
+                            <Table all={element} />
+
+                        </div>
+                    )}
+                </div> : <Table all={alltransaction} />
+                }
+            </div>
+        </>
+
     )
 }
 

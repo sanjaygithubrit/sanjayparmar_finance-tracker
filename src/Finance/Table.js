@@ -4,19 +4,44 @@ import { useNavigate } from "react-router-dom";
 
 export const Table = (prop) => {
 
+    
+    const [page, setPage] = useState(1)
     const [alltransaction, setAlltransaction] = useState([])
     const [order, setOrder] = useState("ASC")
 
+    const pageperrecord = 3;
+
+    const number = Math.ceil(prop.all.length / pageperrecord);
+    let pagearray = []
+
+    for (let i = 1; i <= number; i++) {
+        pagearray.push(i);
+    }
+
+    const recordstart = (page - 1) * pageperrecord;
+    const recordend = (page) * pageperrecord;
+
+
+
     useEffect(() => {
-        setAlltransaction(prop.all)
-    }, [prop.all])
+        setAlltransaction(prop.all.slice(recordstart, recordend))
+    }, [prop.all, page])
 
     const navigate = useNavigate();
 
     function View(alltransaction) {
 
-        navigate("/view",{ state: alltransaction });
+        navigate("/view", { state: alltransaction });
 
+    }
+
+    function edit(id) {
+        navigate(`/addtransaction/${id}`)
+    }
+
+    function funpage(value) {
+        setPage(value);
+        console.log(value, "value")
     }
 
 
@@ -37,7 +62,7 @@ export const Table = (prop) => {
             setOrder("no")
         }
         if (order === "no") {
-            setAlltransaction(prop.all)
+            setAlltransaction(prop.all.slice(recordstart, recordend))
             setOrder("ASC")
         }
     }
@@ -60,7 +85,7 @@ export const Table = (prop) => {
             setOrder("no")
         }
         if (order === "no") {
-            setAlltransaction(prop.all)
+            setAlltransaction(prop.all.slice(recordstart, recordend))
             setOrder("ASC")
         }
     }
@@ -81,6 +106,7 @@ export const Table = (prop) => {
                             <th>receipt</th>
                             <th onClick={() => sorting("notes")}>notes</th>
                             <th>View</th>
+                            <th>Edit</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -94,13 +120,23 @@ export const Table = (prop) => {
                                 <td>{new Intl.NumberFormat("en-IN").format(alltransaction.amount)}</td>
                                 <td><img src={alltransaction.receipt} /></td>
                                 <td>{alltransaction.notes}</td>
-                                <td onClick={()=>View(alltransaction)} >View</td>
+                                <td onClick={() => View(alltransaction)} >View </td>
+                                <td onClick={()=>edit(alltransaction.id)}>Edit</td>
                             </tr>
                         ))}
 
                     </tbody>
                 </table>
+                <div className="paginationdiv">
+                    {pagearray.map((value, index) =>
+                        <span className="pagenumber" onClick={() => funpage(value)} > {value}</span>
+                    )}
+                </div>
             </div>
+
+
+
+
         </>
 
     )

@@ -23,6 +23,7 @@ const App = () => {
         <Route  path='/user-post' element={<Post1 />}/>  
         <Route  path='/form' element={<Form />}/> 
         <Route  path='/addtransaction' element={<Addtransaction />}/> 
+        <Route  path='/addtransaction/:id' element={<Addtransaction />}/> 
         <Route  path='/alltransaction' element={<Alltransaction />}/> 
         <Route  path='/View' element={<View />}/> 
     </Routes>

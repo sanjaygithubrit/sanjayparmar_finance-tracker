@@ -28,7 +28,11 @@ import { Link } from "react-router-dom";
         }
         else{
             var get =  JSON.parse(localStorage.getItem("Transaction") || "[]");
-        
+
+            var id =  get.length + 1;
+            console.log(id,"id")
+            transaction.id = id;
+            
             get.push(transaction);
 
             localStorage.setItem('Transaction', JSON.stringify(get));
