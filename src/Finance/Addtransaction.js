@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import Dropdown from "./Dropdown";
 import validation from "./validation";
 import { Link, useParams } from "react-router-dom";
@@ -15,22 +15,28 @@ export const Addtransaction = () => {
         amount: "",
         receipt: "",
         notes: "",
-    });
+      });
 
     const [error, setError] = useState({})
 
     let { id } = useParams();
 
+
+    useEffect(()=>{
+
     if (id === undefined) { 
         console.log(id, "mm")
     } else {
         var editdata = JSON.parse(localStorage.getItem("Transaction") || "[]");
-        // console.log(editdata);
-        
-    //   setTransaction(editdata[id-1])
-
+        console.log(editdata[id-1]);
+        setTransaction(editdata[id-1])
+  
         console.log("sanjay");
     }
+       
+
+	}, [])
+
 
     const month = [
 
@@ -132,7 +138,7 @@ export const Addtransaction = () => {
                         <span className="form__label">
                             Transaction Date:
                         </span>
-                        <input type="Date"  name="transactiondate" placeholder="Enter Transaction Date " onChange={handleinput} />
+                        <input type="Date" value={transaction.transactiondate} name="transactiondate" placeholder="Enter Transaction Date " onChange={handleinput} />
                         {error.transactiondate && <p style={{ color: "red" }}>{error.transactiondate}</p>}
 
                     </div>
@@ -143,8 +149,8 @@ export const Addtransaction = () => {
                         <span className="form__label">
                             Month Year:
                         </span>
-                        <select name="month" defaultValue="default" onChange={handleinput}>
-                            <option value="default" disabled>Select month </option>
+                        <select name="month" defaultValue="default"  value={transaction.month} onChange={handleinput}>
+                            <option value="" disabled >Select month </option>
                             {month.map((k) => (
                                 <option key={k.label} value={k.value}>
                                     {k.label}
@@ -160,8 +166,8 @@ export const Addtransaction = () => {
                         <span className="form__label">
                             Transaction type:
                         </span>
-                        <select name="transactiontype" defaultValue="default" onChange={handleinput}>
-                            <option value="default" disabled>Select Transaction type </option>
+                        <select name="transactiontype" defaultValue="default"  value={transaction.transactiontype} onChange={handleinput}>
+                            <option value="" disabled>Select Transaction type </option>
                             {transactiontype.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
@@ -177,8 +183,8 @@ export const Addtransaction = () => {
                         <span className="form__label">
                             From Account:
                         </span>
-                        <select name="fromaccount" defaultValue="default" onChange={handleinput}>
-                            <option value="default" disabled>Select From account </option>
+                        <select name="fromaccount" defaultValue="default"  value={transaction.fromaccount} onChange={handleinput}>
+                            <option value="" disabled>Select From account </option>
                             {fromaccount.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
@@ -194,8 +200,8 @@ export const Addtransaction = () => {
                         <span className="form__label">
                             toaccount:
                         </span>
-                        <select name="toaccount" defaultValue="default" onChange={handleinput}>
-                            <option value="default" disabled>Select Toaccount </option>
+                        <select name="toaccount" defaultValue="default"  value={transaction.toaccount} onChange={handleinput}>
+                            <option value="" disabled>Select Toaccount </option>
                             {toaccount.map((key) => (
                                 <option key={key.label} value={key.value}>
                                     {key.label}
@@ -213,7 +219,7 @@ export const Addtransaction = () => {
                             Amount:
                         </span>
 
-                        <input type="number" name="amount" placeholder="Enter Amount" onChange={handleinput} />
+                        <input type="number" name="amount" value={transaction.amount} placeholder="Enter Amount" onChange={handleinput} />
                         {error.amount && <p style={{ color: "red" }}>{error.amount}</p>}
 
                     </div>
@@ -223,7 +229,7 @@ export const Addtransaction = () => {
                             Receipt:
                         </label>
                         {/* <span  className="form__label"> Receipt</span> */}
-                        <input type="file" name="receipt" id="fromfile" onChange={imageUpload} />
+                        <input type="file" name="receipt"  id="fromfile" onChange={imageUpload} />
                         {error.receipt && <p style={{ color: "red" }}>{error.receipt}</p>}
                     </div>
                     <br />
@@ -231,7 +237,7 @@ export const Addtransaction = () => {
                         <span className="form__label">
                             Notes:
                         </span>
-                        <textarea placeholder="notes" name="notes" onChange={handleinput} ></textarea>
+                        <textarea placeholder="notes" name="notes" value={transaction.notes} onChange={handleinput} ></textarea>
                         {error.notes && <p style={{ color: "red" }}>{error.notes}</p>}
 
                     </div>

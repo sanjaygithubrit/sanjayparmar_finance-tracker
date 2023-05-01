@@ -19,6 +19,8 @@ import { Link } from "react-router-dom";
             error.toaccount =" Please select different toaccount"
         }else if(transaction.amount ===""){
             error.amount =" Please enter Amount"
+        }else if(transaction.receipt === ""){
+            error.receipt =" Please enter receipt"
         }else if(transaction.receipt === "size"){
             error.receipt =" Please enter Correct Size"
         }else if(transaction.receipt ==="type"){
@@ -27,15 +29,36 @@ import { Link } from "react-router-dom";
             error.notes =" Please enter notes"
         }
         else{
-            var get =  JSON.parse(localStorage.getItem("Transaction") || "[]");
-
-            var id =  get.length + 1;
-            console.log(id,"id")
-            transaction.id = id;
             
-            get.push(transaction);
+            if (transaction.id === undefined) {
+            var data =  JSON.parse(localStorage.getItem("Transaction") || "[]");
 
-            localStorage.setItem('Transaction', JSON.stringify(get));
+            var id =  data.length + 1;
+         
+            transaction.id = id;
+
+            data.push(transaction);
+
+            localStorage.setItem('Transaction', JSON.stringify(data));
+            } 
+            else {
+
+                var editdata =  JSON.parse(localStorage.getItem("Transaction") || "[]");
+
+                editdata[transaction.id-1]= transaction;
+
+                localStorage.setItem('Transaction', JSON.stringify(editdata));
+
+            }
+            // var get =  JSON.parse(localStorage.getItem("Transaction") || "[]");
+
+            // var id =  get.length + 1;
+            // console.log(id,"id")
+            // transaction.id = id;
+
+            // get.push(transaction);
+
+            // localStorage.setItem('Transaction', JSON.stringify(get));
 
           error.success = "Transaction Sucsess"
 
