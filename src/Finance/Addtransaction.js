@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 // import Dropdown from "./Dropdown";
 import Validation from "./validation";
 import { Link, useParams } from "react-router-dom";
-import { Alltransaction } from "./Alltransaction";
+
 
 export const Addtransaction = () => {
 
@@ -18,7 +18,16 @@ export const Addtransaction = () => {
         notes: "",
       });
 
-    const [error, setError] = useState({})
+    const [error, setError] = useState({
+        transactiondate: "",
+        month: "",
+        transactiontype: "",
+        fromaccount: "",
+        toaccount: "",
+        amount: "",
+        receipt: "",
+        notes: "",
+    })
 
     let { id } = useParams();
 
@@ -132,7 +141,14 @@ export const Addtransaction = () => {
 
     function submitform(e) {
         e.preventDefault()
-        setError(Validation(transaction))
+        const success = Validation(transaction)
+        setError(success)
+
+        if (success.transactiondate === "" && success.month === "" && success.transactiontype === "" && success.fromaccount === "" && success.toaccount === "" && success.amount === "" && success.receipt === "" && success.notes === "") {
+            
+            setTransaction(success)
+        }
+
     }
 
     return (

@@ -146,9 +146,6 @@ export const Form = () => {
             error.gender = "Please Provide gender"
         }
 
-
-
-
         return error;
     }
 
@@ -156,6 +153,7 @@ export const Form = () => {
 
     function submitform(e) {
         e.preventDefault()
+
         setError(validation(values, interest, achievement))
 
 
@@ -253,9 +251,7 @@ export const Form = () => {
                             onChange={handleinput}
                         />
                         <label htmlFor="Female">Female</label>
-
-
-
+                        
                         {error.gender && <p style={{ color: "red" }}>{error.gender}</p>}
 
                     </div>

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "./Alltransaction.css";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const Table = (prop) => {
 
     const [filterval, setFilval] = useState("")
-    // const [records, setRecords] = useState("")
     const [page, setPage] = useState(1)
     const [alltransaction, setAlltransaction] = useState([])
     const [alldata, setAlldata] = useState(prop.all)
@@ -29,6 +28,7 @@ export const Table = (prop) => {
         setAlltransaction(alldata.slice(recordstart, recordend))
     }, [prop.all])
 
+    
     useEffect(() => {
         setAlltransaction(alldata.slice(recordstart, recordend))
     }, [page, alldata])
@@ -111,7 +111,7 @@ export const Table = (prop) => {
         } else {
 
             const searchdata = alldata.filter(item => item.transactiondate.toLowerCase().includes(e.target.value.toLowerCase()) || item.month.toLowerCase().includes(e.target.value.toLowerCase()) || item.transactiontype.toLowerCase().includes(e.target.value.toLowerCase()) || item.fromaccount.toLowerCase().includes(e.target.value.toLowerCase()) || item.toaccount.toLowerCase().includes(e.target.value.toLowerCase()) || item.amount.toLowerCase().includes(e.target.value.toLowerCase()) || item.notes.toLowerCase().includes(e.target.value.toLowerCase()))
-            
+
             setAlltransaction(searchdata);
         }
         setFilval(e.target.value)
@@ -120,13 +120,13 @@ export const Table = (prop) => {
 
 
 
+
     return (
         <>
-
-            <input value={filterval}
-onInput={(e) => searchVal(e)}
-            ></input>
-
+            <div className="searchdiv">
+                <input value={filterval} className="searchspan" onInput={(e) => searchVal(e)}></input>
+                <span className="searchspan">Search</span>
+            </div>
             <div className="addtransactionmaindiv">
                 <table>
                     <thead>
@@ -175,4 +175,8 @@ onInput={(e) => searchVal(e)}
 
     )
 }
+
+
+
+
 

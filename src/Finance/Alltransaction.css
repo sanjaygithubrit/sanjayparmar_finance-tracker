@@ -93,3 +93,13 @@ padding: 30px;
     .paginationdiv{
       margin-top: 10px;
     }
+    .searchdiv{
+      margin-bottom: 30px;
+    }
+    .searchspan{
+      border: 2px solid black;
+      border-radius: 5px;
+     
+      padding: 7px;
+      margin-left: 20px;
+    }

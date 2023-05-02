@@ -3,6 +3,8 @@ import "./Alltransaction.css";
 import { Link } from "react-router-dom";
 import { Table } from "./Table";
 
+import { useNavigate } from "react-router-dom";
+
 
 export const Alltransaction = () => {
 
@@ -25,6 +27,14 @@ export const Alltransaction = () => {
         setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
     }, []);
 
+    const navigate = useNavigate();
+
+   function Logout() {
+
+        localStorage.removeItem("Token");
+           navigate("/login")
+           
+    }
 
     function group(event) {
 
@@ -53,18 +63,21 @@ export const Alltransaction = () => {
                     <span className="spangroupby" >
                         Group By:
                     </span>
-                    <select name="toaccount" defaultValue="default" className="selectbox" onChange={group}>
+                    <select name="toaccount" defaultValue="default" className="searchspan" onChange={group}>
                         <option value="default" disabled>select...... </option>
                         {selectgroupby.map((key) => (
                             <option key={key.label} value={key.value}>
                                 {key.label}
-                            </option>
+                            </option>   
                         ))}
                     </select>
                 </div>
 
                 <div className="addtransactioninall">
                     <Link className="groupby" to='/Addtransaction'> Addtransaction </Link>
+                </div>
+                <div onClick={Logout} className="addtransactioninall">
+                   Logout
                 </div>
             </div>
             <div className="addtransactionmaindiv">
