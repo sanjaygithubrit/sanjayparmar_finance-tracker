@@ -82,14 +82,27 @@ padding: 30px;
         align-items: center;
         justify-content: center;
     }
-    .pagenumber{
-      border: 2px solid black;
-      border-radius: 7px;
-      background-color: antiquewhite;
-      padding: 5px;
-      margin: 5px;
-
+    .pagenumberselect{
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      background-color: rgb(202, 211, 210);
+      border: 1px solid #ddd;
+       border-radius: 7px;
     }
+
+    .pagenumber{
+      color: black;
+      float: left;
+      padding: 8px 16px;
+      text-decoration: none;
+      background-color: rgb(255, 245, 245);
+      border: 1px solid black;
+       border-radius: 7px;
+     
+    }
+
     .paginationdiv{
       margin-top: 10px;
     }

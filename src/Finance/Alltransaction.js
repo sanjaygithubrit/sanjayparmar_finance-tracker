@@ -23,7 +23,6 @@ export const Alltransaction = () => {
     ];
 
     useEffect(() => {
-
         setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
     }, []);
 
@@ -89,14 +88,12 @@ export const Alltransaction = () => {
                         <div key={index}>
                             <h1>{Object.keys(groupby)[index]}</h1>
                             <Table all={element} />
-
                         </div>
                     )}
                 </div> : <Table all={alltransaction} />
                 }
             </div>
         </>
-
     )
 }
 
