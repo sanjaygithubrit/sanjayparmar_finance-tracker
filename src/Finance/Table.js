@@ -9,22 +9,12 @@ export const Table = (prop) => {
     const [alltransaction, setAlltransaction] = useState([]);
     const [alldata, setAlldata] = useState([]);
     
- console.log(alldata,"111");
-
     const [sorting, setSorting] = useState({
         column: "",
         order: "",
         type: "",
     });
-    // const [sortingcol, setSortingcol] = useState("transactiondate");
 
- 
-
-
-    // useEffect(() => {
-
-
-    // }, [page, alldata]);
 
     const navigate = useNavigate();
 
@@ -66,12 +56,11 @@ export const Table = (prop) => {
 
        
 
-
-        let { column, order, type } = sorting;
-        console.log(alldata,"10000");
+       let { column, order, type } = sorting;
+        // console.log(alldata,"10000");
         let  searched = [...alldata];
-        console.log(searched,"100");
-      console.log(sorting,"sss");
+        // console.log(searched,"100");
+    //   console.log(sorting,"sss");
         if (column) {
             
             switch (type) {
@@ -125,17 +114,16 @@ export const Table = (prop) => {
                             searched = searched.sort((a, b) =>
                                 a[column].toLowerCase() > b[column].toLowerCase() ? 1 : -1
                             );
-                            console.log("2");
-                            console.log(searched,"2");
+                  
                             break;
                         case "DESC":
                             searched = searched.sort((a, b) =>
                                 a[column].toLowerCase() < b[column].toLowerCase() ? 1 : -1
                             );
-                            console.log("3");
+                         
                             break;
                         default:
-                            console.log("4");
+                    
                     }
             }
         }
@@ -182,7 +170,7 @@ export const Table = (prop) => {
     const searchVal = (e) => {
         if (e.target.value === "") {
             setAlldata(prop.all);
-            // setAlltransaction(alldata.slice(recordstart, recordend));
+            // setAlltransaction(alldata);
         } else {
             const searchdata = alldata.filter(
                 (item) =>
