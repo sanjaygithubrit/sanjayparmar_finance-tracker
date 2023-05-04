@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Alltransaction.css";
 import { Link } from "react-router-dom";
-import { Table } from "./Table";
+import { Table } from "./Component/Table";
 
 import { useNavigate } from "react-router-dom";
 
@@ -10,7 +10,7 @@ export const Alltransaction = () => {
 
     const [alltransaction, setAlltransaction] = useState([])
    
-    const [order, setOrder] = useState("ASC")
+   
     const [groupby, setGroupby] = useState([])
     const [grp, setGrp] = useState(false)
 
@@ -41,7 +41,7 @@ export const Alltransaction = () => {
 
         const groupBy = (array, key) => {
             let sanjay = array.reduce((result, currentValue) => {
-                // If an array already present for key, push it to the array. Else create an array and push the object
+                
                 (result[currentValue[key]] = result[currentValue[key]] || []).push(
                     currentValue
                 );

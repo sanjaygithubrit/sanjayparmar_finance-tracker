@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import Dropdown from "./Dropdown";
-import Validation from "./validation";
+import Validation from "./Component/validation";
 import { Link, useParams } from "react-router-dom";
 
 export const Addtransaction = () => {

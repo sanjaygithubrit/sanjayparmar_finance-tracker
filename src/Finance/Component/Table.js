@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Alltransaction.css";
+import "../Alltransaction.css";
 import { useNavigate } from "react-router-dom";
 
 
@@ -28,7 +28,7 @@ export const Table = (prop) => {
 
     function funpage(value) {
         setPage(value);
-        // console.log(value, "value");
+       
     }
 
 
@@ -57,10 +57,9 @@ export const Table = (prop) => {
        
 
        let { column, order, type } = sorting;
-        // console.log(alldata,"10000");
+       
         let  searched = [...alldata];
-        // console.log(searched,"100");
-    //   console.log(sorting,"sss");
+     
         if (column) {
             
             switch (type) {
@@ -170,7 +169,7 @@ export const Table = (prop) => {
     const searchVal = (e) => {
         if (e.target.value === "") {
             setAlldata(prop.all);
-            // setAlltransaction(alldata);
+            
         } else {
             const searchdata = alldata.filter(
                 (item) =>
@@ -189,7 +188,6 @@ export const Table = (prop) => {
                     item.notes.toLowerCase().includes(e.target.value.toLowerCase())
             );
             setAlldata(searchdata);
-            // setAlltransaction(searchdata);
         }
         setFilval(e.target.value);
     };
