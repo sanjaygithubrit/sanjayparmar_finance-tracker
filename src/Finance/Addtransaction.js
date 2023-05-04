@@ -12,6 +12,7 @@ export const Addtransaction = () => {
     amount: "",
     receipt: "",
     notes: "",
+   
   });
 
   const [error, setError] = useState({
@@ -23,6 +24,7 @@ export const Addtransaction = () => {
     amount: "",
     receipt: "",
     notes: "",
+    success:"",
   });
 
   let { id } = useParams();
@@ -98,15 +100,12 @@ export const Addtransaction = () => {
     if (file.size > 1048576) {
       const newobj = { ...transaction, receipt: "size" };
       setTransaction(newobj);
-    } else if (
-      file.type === "image/png" ||
-      file.type === "image/jpeg" ||
-      file.type === "image/svg+xml"
-    ) {
+    } else if (file.type === "image/png" ||file.type === "image/jpeg" ||file.type === "image/svg+xml" )
+     {
       getBase64(file).then((base64) => {
         const newobj = { ...transaction, receipt: base64 };
         setTransaction(newobj);
-        console.log(base64, "base64");
+        // console.log(base64, "base64");
         console.debug("file stored", base64);
       });
     } else {
@@ -117,6 +116,9 @@ export const Addtransaction = () => {
 
   function handleinput(event) {
     const newobj = { ...transaction, [event.target.name]: event.target.value };
+    const errorremove = { ...error, [event.target.name]: "",success:"" };
+     
+    setError(errorremove);
     setTransaction(newobj);
   }
 
@@ -140,6 +142,7 @@ export const Addtransaction = () => {
       success.receipt === "" &&
       success.notes === ""
     ) {
+
       setTransaction(success);
     }
   }
@@ -286,9 +289,9 @@ export const Addtransaction = () => {
                 onChange={imageUpload}
               />
             ) : (
-              <div>
-                <div onClick={removeimage}> remove</div>
+              <div className="removeimage">
                 <img src={transaction.receipt} />
+                <div onClick={removeimage}> remove</div>
               </div>
             )}
 

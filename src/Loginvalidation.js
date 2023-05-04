@@ -17,14 +17,14 @@ function Loginvalidation(login) {
     if (login.password === "") {
         error.password = "Please enter password"
     }
-
+   
     if (error.email === "" && error.password === "") {
-      
-
+        
         var data = JSON.parse(localStorage.getItem("Register") || "[]");
 
-        for (let i = 0; i < data.length; i++) {
 
+        for (let i = 0; i < data.length; i++) {
+            console.log("after");
             if (data[i].email === login.email && data[i].password === login.password) {
 
                 function stringGen(len) {
@@ -49,6 +49,10 @@ function Loginvalidation(login) {
             } else {
                 error.emailpassword = "Email or Password Wrong"
             }
+            }
+            if (data.length===0) {
+    
+                error.emailpassword = "Email or Password Wrong"
             }
         }
 

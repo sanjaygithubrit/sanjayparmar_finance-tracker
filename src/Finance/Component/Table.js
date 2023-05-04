@@ -59,7 +59,7 @@ export const Table = (prop) => {
        let { column, order, type } = sorting;
        
         let  searched = [...alldata];
-     
+  
         if (column) {
             
             switch (type) {
@@ -83,8 +83,7 @@ export const Table = (prop) => {
                             break;
                         
                         default:
-                            
-                          
+
                     }
                     break;
 
@@ -154,12 +153,12 @@ export const Table = (prop) => {
                     tempsorting.type = type;
             }
         } else {
-            console.log(column);
+     
             tempsorting.column = column;
             tempsorting.order = "ASC";
             tempsorting.type = type;
         }
-
+setPage(1)
         setSorting(tempsorting);
       
     };
@@ -167,7 +166,9 @@ export const Table = (prop) => {
   
 
     const searchVal = (e) => {
+
         if (e.target.value === "") {
+            setPage(1);
             setAlldata(prop.all);
             
         } else {
@@ -187,8 +188,10 @@ export const Table = (prop) => {
                     item.amount.toLowerCase().includes(e.target.value.toLowerCase()) ||
                     item.notes.toLowerCase().includes(e.target.value.toLowerCase())
             );
+            setPage(1); 
             setAlldata(searchdata);
         }
+
         setFilval(e.target.value);
     };
 
@@ -207,7 +210,13 @@ export const Table = (prop) => {
 
            
             </div>
-            <div className="addtransactionmaindiv">
+
+            {alltransaction.length===0? <div>
+            <h1>
+                No Transaction Data  
+            </h1>
+            </div>
+            :<div className="addtransactionmaindiv">
                 <table>
                     <thead>
                         <tr>
@@ -261,7 +270,10 @@ export const Table = (prop) => {
                         )
                     )}
                 </div>
-            </div>
+            </div>}
+            
+
+
         </>
     );
 };
