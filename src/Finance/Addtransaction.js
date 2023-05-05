@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Validation from "./Component/validation";
 import { Link, useParams } from "react-router-dom";
 
@@ -103,12 +103,16 @@ export const Addtransaction = () => {
     } else if (file.type === "image/png" ||file.type === "image/jpeg" ||file.type === "image/svg+xml" )
      {
       getBase64(file).then((base64) => {
+        const errorremove = { ...error, receipt: "",success:"" };
+     
+        setError(errorremove);
         const newobj = { ...transaction, receipt: base64 };
         setTransaction(newobj);
         // console.log(base64, "base64");
         console.debug("file stored", base64);
       });
     } else {
+    
       const newobj = { ...transaction, receipt: "type" };
       setTransaction(newobj);
     }
@@ -282,20 +286,25 @@ export const Addtransaction = () => {
               Receipt:
             </label>
             {transaction.receipt === "" ? (
+              <div>
               <input
                 type="file"
                 name="receipt"
                 id="fromfile"
                 onChange={imageUpload}
               />
+              {error.receipt && <p style={{ color: "red" }}>{error.receipt}</p>}
+              </div>
             ) : (
               <div className="removeimage">
                 <img src={transaction.receipt} />
-                <div onClick={removeimage}> remove</div>
+                <span style={{ color: "red" }} onClick={removeimage}>remove</span>
+                {/* <div onClick={removeimage}> remove</div> */}
+                {error.receipt && <p style={{ color: "red" }}>{error.receipt}</p>}
               </div>
             )}
 
-            {error.receipt && <p style={{ color: "red" }}>{error.receipt}</p>}
+            
           </div>
           <br />
           <div>
@@ -318,3 +327,5 @@ export const Addtransaction = () => {
     </>
   );
 };
+
+

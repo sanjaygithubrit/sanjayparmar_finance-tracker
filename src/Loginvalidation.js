@@ -52,7 +52,7 @@ function Loginvalidation(login) {
             }
             if (data.length===0) {
     
-                error.emailpassword = "Email or Password Wrong"
+                error.emailpassword = "you have not Register"
             }
         }
 

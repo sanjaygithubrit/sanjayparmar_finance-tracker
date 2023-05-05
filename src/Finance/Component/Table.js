@@ -198,25 +198,16 @@ setPage(1)
     return (
         <>
             <div className="searchdiv">
-                <input
-                    value={filterval}
-                    className="searchspan"
-                    onInput={(e) => searchVal(e)}
-                ></input>
+                <input value={filterval} className="searchspan" onInput={(e) => searchVal(e)}></input>
                 <span className="searchspan">Search</span>
-               
             </div>
-            <div>
-
-           
-            </div>
-
+            
             {alltransaction.length===0? <div>
             <h1>
                 No Transaction Data  
             </h1>
             </div>
-            :<div className="addtransactionmaindiv">
+            : <div className="addtransactionmaindiv">
                 <table>
                     <thead>
                         <tr>

@@ -89,6 +89,7 @@ function redirectregister() {
                     <label className="label">Password</label>
                     <input onChange={handleinput} className="input" name='password' type="password" />
                     {error.password && <p style={{ color: "red" }}>{error.password}</p>}
+                    
                     {error.emailpassword && <p style={{ color: "red" }}>{error.emailpassword}</p>}
 
                     <button className="btn" type="submit">Login</button>
@@ -98,3 +99,5 @@ function redirectregister() {
         </div>
     );
 }
+
+
