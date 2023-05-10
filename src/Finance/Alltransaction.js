@@ -5,21 +5,18 @@ import { Table } from "./Component/Table";
 
 import { useNavigate } from "react-router-dom";
 
-
 export const Alltransaction = () => {
+    const [alltransaction, setAlltransaction] = useState([]);
 
-    const [alltransaction, setAlltransaction] = useState([])
-   
-   
-    const [groupby, setGroupby] = useState([])
-    const [grp, setGrp] = useState(false)
+    const [groupby, setGroupby] = useState([]);
+    const [grp, setGrp] = useState(false);
 
     const selectgroupby = [
-        { value: 'month', label: 'Month Year' },
-        { value: 'transactiontype', label: 'Transaction Type' },
-        { value: 'fromaccount', label: 'From Account' },
-        { value: 'toaccount', label: 'To Account' },
-        { value: 'none', label: 'none' },
+        { value: "month", label: "Month Year" },
+        { value: "transactiontype", label: "Transaction Type" },
+        { value: "fromaccount", label: "From Account" },
+        { value: "toaccount", label: "To Account" },
+        { value: "none", label: "none" },
     ];
 
     useEffect(() => {
@@ -28,20 +25,16 @@ export const Alltransaction = () => {
 
     const navigate = useNavigate();
 
-   function Logout() {
-
+    function Logout() {
         localStorage.removeItem("Token");
-           navigate("/login")
-           
+        navigate("/login");
     }
 
     function group(event) {
-
         const grouptype = event.target.value;
 
         const groupBy = (array, key) => {
             let sanjay = array.reduce((result, currentValue) => {
-                
                 (result[currentValue[key]] = result[currentValue[key]] || []).push(
                     currentValue
                 );
@@ -52,48 +45,56 @@ export const Alltransaction = () => {
         const personGroupedByColor = groupBy(alltransaction, grouptype);
 
         setGroupby(personGroupedByColor);
-        setGrp(true)
-    }
+        setGrp(true);
+    }       
 
     return (
+
         <>
             <div className="maingroupby">
                 <div className="groupby">
-                    <span className="spangroupby" >
-                        Group By:
-                    </span>
-                    <select name="toaccount" defaultValue="default" className="searchspan" onChange={group}>
-                        <option value="default" disabled>select...... </option>
+                    <span className="spangroupby">Group By:</span>
+                    <select
+                        name="toaccount"
+                        defaultValue="default"
+                        className="searchspan"
+                        onChange={group}
+                    >
+                        <option value="default" disabled>
+                            select......{" "}
+                        </option>
                         {selectgroupby.map((key) => (
                             <option key={key.label} value={key.value}>
                                 {key.label}
-                            </option>   
+                            </option>
                         ))}
                     </select>
                 </div>
 
                 <div className="addtransactioninall">
-                    <Link className="groupby" to='/Addtransaction'> Addtransaction </Link>
+                    <Link className="groupby" to="/Addtransaction">
+                        {" "}
+                        Addtransaction{" "}
+                    </Link>
                 </div>
                 <div onClick={Logout} className="addtransactioninall">
-                   Logout
+                    Logout
                 </div>
             </div>
             <div className="addtransactionmaindiv">
-
-                {grp ? <div>
-
-                    {Object.values(groupby).map((element, index) =>
-
-                        <div key={index}>
-                            <h1>{Object.keys(groupby)[index]}</h1>
-                            <Table all={element} />
-                        </div>
-                    )}
-                </div> : <Table all={alltransaction} />
-                }
+                {grp ? (
+                    <div>
+                        {Object.values(groupby).map((element, index) => (
+                            <div key={index}>
+                                <h1>{Object.keys(groupby)[index]}</h1>
+                                <Table all={element} />
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <Table all={alltransaction} />
+                )}
             </div>
         </>
-    )
-}
-
+    );
+};

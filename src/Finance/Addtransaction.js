@@ -1,9 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import Validation from "./Component/validation";
+// import Validation from "./Component/validation";
 import { Link, useParams } from "react-router-dom";
+import { useForm } from "react-hook-form";
+
+
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export const Addtransaction = () => {
-  const [transaction, setTransaction] = useState({
+  const [addtransaction, setAddtransaction] = useState({
     transactiondate: "",
     month: "",
     transactiontype: "",
@@ -12,20 +17,19 @@ export const Addtransaction = () => {
     amount: "",
     receipt: "",
     notes: "",
-   
   });
 
-  const [error, setError] = useState({
-    transactiondate: "",
-    month: "",
-    transactiontype: "",
-    fromaccount: "",
-    toaccount: "",
-    amount: "",
-    receipt: "",
-    notes: "",
-    success:"",
-  });
+  // const [error, setError] = useState({
+  //   transactiondate: "",
+  //   month: "",
+  //   transactiontype: "",
+  //   fromaccount: "",
+  //   toaccount: "",
+  //   amount: "",
+  //   receipt: "",
+  //   notes: "",
+  //   success:"",
+  // });
 
   let { id } = useParams();
 
@@ -35,7 +39,12 @@ export const Addtransaction = () => {
     } else {
       var editdata = JSON.parse(localStorage.getItem("Transaction") || "[]");
       console.log(editdata[id - 1]);
-      setTransaction(editdata[id - 1]);
+      const value =  editdata[id - 1];
+      for (let x in value) {
+        setValue(x,value[x])
+       
+      }
+      setAddtransaction(value);
 
       console.log("sanjay");
     }
@@ -48,6 +57,7 @@ export const Addtransaction = () => {
   //     }, [transaction])
 
   const month = [
+    { label: '-- select option --', value: '' },
     { value: "Jan 2023", label: "Jan 2023" },
     { value: "Feb 2023", label: "Feb 2023" },
     { value: "Mar 2023", label: "Mar 2023" },
@@ -63,12 +73,14 @@ export const Addtransaction = () => {
   ];
 
   const transactiontype = [
+    { label: '-- select option --', value: '' },
     { value: "Home Expense", label: "Home Expense" },
     { value: "Personal Expense", label: "Personal Expense" },
     { value: "Income", label: "Income" },
   ];
 
   const fromaccount = [
+    { label: '-- select option --', value: '' },
     { value: "Personal Account", label: "Personal Account" },
     { value: "Real Living", label: "Real Living" },
     { value: "My Dream Home", label: "My Dream Home" },
@@ -78,6 +90,7 @@ export const Addtransaction = () => {
   ];
 
   const toaccount = [
+    { label: '-- select option --', value: '' },
     { value: "Personal Account", label: "Personal Account" },
     { value: "Real Living", label: "Real Living" },
     { value: "My Dream Home", label: "My Dream Home" },
@@ -86,70 +99,179 @@ export const Addtransaction = () => {
     { value: "Big Block", label: "Big Block" },
   ];
 
-  const getBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-      reader.readAsDataURL(file);
-    });
-  };
+  // const getBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.onload = () => resolve(reader.result);
+  //     reader.onerror = (error) => reject(error);
+  //     reader.readAsDataURL(file);
+  //   });
+  // };
 
-  const imageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file.size > 1048576) {
-      const newobj = { ...transaction, receipt: "size" };
-      setTransaction(newobj);
-    } else if (file.type === "image/png" ||file.type === "image/jpeg" ||file.type === "image/svg+xml" )
-     {
-      getBase64(file).then((base64) => {
-        const errorremove = { ...error, receipt: "",success:"" };
+  // const imageUpload = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file.size > 1048576) {
+  //     const newobj = { ...transaction, receipt: "size" };
+  //     setTransaction(newobj);
+  //   } else if (file.type === "image/png" ||file.type === "image/jpeg" ||file.type === "image/svg+xml" )
+  //    {
+  //     getBase64(file).then((base64) => {
+  //       const errorremove = { ...error, receipt: "",success:"" };
      
-        setError(errorremove);
-        const newobj = { ...transaction, receipt: base64 };
-        setTransaction(newobj);
-        // console.log(base64, "base64");
-        console.debug("file stored", base64);
-      });
-    } else {
-    
-      const newobj = { ...transaction, receipt: "type" };
-      setTransaction(newobj);
-    }
-  };
+  //       setError(errorremove);
+  //       const newobj = { ...transaction, receipt: base64 };
+  //       setTransaction(newobj);
+  //       // console.log(base64, "base64");
+  //       console.debug("file stored", base64);
+  //     });
+  //   } else {
+  //     const newobj = { ...transaction, receipt: "type" };
+  //     setTransaction(newobj);
+  //   }
+  // };
 
-  function handleinput(event) {
-    const newobj = { ...transaction, [event.target.name]: event.target.value };
-    const errorremove = { ...error, [event.target.name]: "",success:"" };
+  // function handleinput(event) {
+  //   const newobj = { ...transaction, [event.target.name]: event.target.value };
+  //   const errorremove = { ...error, [event.target.name]: "",success:"" };
      
-    setError(errorremove);
-    setTransaction(newobj);
+  //   setError(errorremove);
+  //   setTransaction(newobj);
+  // }
+
+  // function removeimage() {
+  //   const newobj = { ...transaction, receipt: "" };
+  //   setTransaction(newobj);
+  // }
+
+  // function submitform(e) {
+  //   e.preventDefault();
+  //   const success = Validation(transaction);
+  //   setError(success);
+
+  //   if (
+  //     success.transactiondate === "" &&
+  //     success.month === "" &&
+  //     success.transactiontype === "" &&
+  //     success.fromaccount === "" &&
+  //     success.toaccount === "" &&
+  //     success.amount === "" &&
+  //     success.receipt === "" &&
+  //     success.notes === ""
+  //   ) {
+
+  //     setTransaction(success);
+  //   }
+  // }
+  const today = new Date();
+
+  let userSchema = yup.object().shape({
+    transactiondate: yup.date()
+      .typeError("Transaction Date is Required")
+      .max(today, "Enter Valid Transaction Date"),
+      month: yup.string().required("Month Year is Required"),
+      transactiontype: yup.string().required("Transaction Type is Required"),
+      fromaccount: yup.string().required("From Account  is Required"),
+   
+      toaccount:yup.string().required("To Account  is Required").notOneOf([yup.ref("fromaccount")],"From and to must not be same") ,
+      amount: yup.string().required("Amount  is Required"),
+     receipt:yup.mixed().test("requird", "The file is required", (value) => {
+console.log(typeof value );
+      if (typeof value==="string") {
+        // console.log("aa");
+        return true} 
+        else{
+          // console.log("zz");
+          return false;
+        }
+
+  }).test("fileSize", "The file is too large", (value) => {
+    console.log(value[0].size,"mm");
+          if (value && value[0].size <= 50000000)
+           {
+            return true} 
+          else{
+            return false;
+          }
+        
+      }).test("type", "Only the following formats are accepted: .jpeg, .jpg,.png,.bmp", (value) => {
+        if (!value.length) return true 
+        return value && (
+          
+            value[0].type === "image/jpeg" ||
+            value[0].type === "image/bmp" ||
+            value[0].type === "image/png" ||
+            value[0].type === "image/jpg" 
+        );
+    }),
+      notes: yup
+      .string("notes should be a string") 
+      .trim()
+      .required("Notes is a required field")
+      .min(2, "Notes Min 2 character"),
+    // createdOn: date().default(() => new Date()),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors  },
+    setValue,
+    reset,
+  } = useForm({ resolver: yupResolver(userSchema) });
+
+  async function bs(file) {
+    let reader = new FileReader()
+    reader.readAsDataURL(file)
+    await new Promise(resolve => reader.onload = () => resolve())
+    return reader.result
+}
+function removeimage() {
+  const newobj = { ...addtransaction, receipt: "" };
+  setAddtransaction(newobj);
+}
+
+  
+  const onSubmitHandler = async(data) => {
+console.log(data.receipt,"reciptttt");
+    if (typeof (data.receipt) !== "string") {
+      let url = await bs(data.receipt[0])
+
+      data.receipt = url;
   }
 
-  function removeimage() {
-    const newobj = { ...transaction, receipt: "" };
-    setTransaction(newobj);
-  }
 
-  function submitform(e) {
-    e.preventDefault();
-    const success = Validation(transaction);
-    setError(success);
+    setAddtransaction(data)
+   
+    if (data.id === undefined) {
+      var data1 =  JSON.parse(localStorage.getItem("Transaction") || "[]");
 
-    if (
-      success.transactiondate === "" &&
-      success.month === "" &&
-      success.transactiontype === "" &&
-      success.fromaccount === "" &&
-      success.toaccount === "" &&
-      success.amount === "" &&
-      success.receipt === "" &&
-      success.notes === ""
-    ) {
+      var id =  data1.length + 1;
+   
+      data.id = id;
 
-      setTransaction(success);
-    }
-  }
+      data1.push(data);
+
+      localStorage.setItem('Transaction', JSON.stringify(data1));
+      
+      } 
+      else {
+
+          var editdata =  JSON.parse(localStorage.getItem("Transaction") || "[]");
+
+          editdata[data.id-1]= data;
+
+          localStorage.setItem('Transaction', JSON.stringify(editdata));
+
+      }
+    // var get = JSON.parse(localStorage.getItem("addtransaction") || "[]");
+    // var id = get.length + 1;
+    // data.id = id;
+    // get.push(data);
+
+    // // localStorage.setItem('Transaction', JSON.stringify(get));
+    // localStorage.setItem("addtransaction", JSON.stringify(get));
+    reset();
+  };
 
   return (
     <>
@@ -161,62 +283,56 @@ export const Addtransaction = () => {
       </div>
 
       <div className="addtransaction">
-        <form className="addtransactionform" onSubmit={submitform}>
+      <form className="addtransactionform" onSubmit={handleSubmit(onSubmitHandler)}>
           <div>
             <span className="form__label">Transaction Date:</span>
             <input
               type="Date"
-              value={transaction.transactiondate}
-              name="transactiondate"
+              name="transactiondate"   
+              {...register("transactiondate", { required: true })}
+             
               placeholder="Enter Transaction Date "
-              onChange={handleinput}
+           
             />
-            {error.transactiondate && (
-              <p style={{ color: "red" }}>{error.transactiondate}</p>
+            {errors.transactiondate && (
+              <p style={{ color: "red" }}>{errors.transactiondate.message}</p>
             )}
           </div>
 
-          <br />
+          <br/>
           <div>
             <span className="form__label">Month Year:</span>
             <select
-              name="month"
-              defaultValue="default"
-              value={transaction.month}
-              onChange={handleinput}
+          name="month"
+             {...register("month", { required: true })}
             >
-              <option value="" disabled>
-                Select month{" "}
-              </option>
+
               {month.map((k) => (
                 <option key={k.label} value={k.value}>
                   {k.label}
                 </option>
               ))}
             </select>
-            {error.month && <p style={{ color: "red" }}>{error.month}</p>}
+            {errors.month && <p style={{ color: "red" }}>{errors.month.message}</p>}
           </div>
           <br />
 
           <div>
             <span className="form__label">Transaction type:</span>
             <select
-              name="transactiontype"
-              defaultValue="default"
-              value={transaction.transactiontype}
-              onChange={handleinput}
+          
+           
+              {...register("transactiontype", { required: true })}
             >
-              <option value="" disabled>
-                Select Transaction type{" "}
-              </option>
+            
               {transactiontype.map((key) => (
                 <option key={key.label} value={key.value}>
                   {key.label}
                 </option>
               ))}
             </select>
-            {error.transactiontype && (
-              <p style={{ color: "red" }}>{error.transactiontype}</p>
+            {errors.transactiontype && (
+              <p style={{ color: "red" }}>{errors.transactiontype.message}</p>
             )}
           </div>
           <br />
@@ -224,22 +340,18 @@ export const Addtransaction = () => {
           <div>
             <span className="form__label">From Account:</span>
             <select
-              name="fromaccount"
-              defaultValue="default"
-              value={transaction.fromaccount}
-              onChange={handleinput}
+            
+              {...register("fromaccount", { required: true })}
             >
-              <option value="" disabled>
-                Select From account{" "}
-              </option>
+            
               {fromaccount.map((key) => (
                 <option key={key.label} value={key.value}>
                   {key.label}
                 </option>
               ))}
             </select>
-            {error.fromaccount && (
-              <p style={{ color: "red" }}>{error.fromaccount}</p>
+            {errors.fromaccount && (
+              <p style={{ color: "red" }}>{errors.fromaccount.message}</p>
             )}
           </div>
 
@@ -248,22 +360,19 @@ export const Addtransaction = () => {
           <div>
             <span className="form__label">toaccount:</span>
             <select
-              name="toaccount"
-              defaultValue="default"
-              value={transaction.toaccount}
-              onChange={handleinput}
+           
+
+              {...register("toaccount", { required: true })}
             >
-              <option value="" disabled>
-                Select Toaccount{" "}
-              </option>
+          
               {toaccount.map((key) => (
                 <option key={key.label} value={key.value}>
                   {key.label}
                 </option>
               ))}
             </select>
-            {error.toaccount && (
-              <p style={{ color: "red" }}>{error.toaccount}</p>
+            {errors.toaccount && (
+              <p style={{ color: "red" }}>{errors.toaccount.message}</p>
             )}
           </div>
 
@@ -274,35 +383,35 @@ export const Addtransaction = () => {
             <input
               type="number"
               name="amount"
-              value={transaction.amount}
+              {...register("amount", { required: true })}
               placeholder="Enter Amount"
-              onChange={handleinput}
+              
             />
-            {error.amount && <p style={{ color: "red" }}>{error.amount}</p>}
+            {errors.amount && <p style={{ color: "red" }}>{errors.amount.message}</p>}
           </div>
           <br />
           <div>
             <label htmlFor="fromfile" className="form__label">
               Receipt:
             </label>
-            {transaction.receipt === "" ? (
-              <div>
-              <input
+          {addtransaction.receipt===""?( <input
                 type="file"
                 name="receipt"
                 id="fromfile"
-                onChange={imageUpload}
-              />
-              {error.receipt && <p style={{ color: "red" }}>{error.receipt}</p>}
+                {...register("receipt", {onChange: async (e) => {
+                  let file = await bs(e.target.files[0])
+                  const newobj = { ...addtransaction, receipt:file};
+      
+                  setAddtransaction(newobj)
+                  }}, { required: true })}
+              />):( 
+                <div><img src={addtransaction.receipt} />
+                <span style={{ color: "red" }} onClick={removeimage} >remove</span></div>)}
+              <div>
+             
+              {errors.receipt && <p style={{ color: "red" }}>{errors.receipt.message}</p>}
               </div>
-            ) : (
-              <div className="removeimage">
-                <img src={transaction.receipt} />
-                <span style={{ color: "red" }} onClick={removeimage}>remove</span>
-                {/* <div onClick={removeimage}> remove</div> */}
-                {error.receipt && <p style={{ color: "red" }}>{error.receipt}</p>}
-              </div>
-            )}
+           
 
             
           </div>
@@ -312,16 +421,16 @@ export const Addtransaction = () => {
             <textarea
               placeholder="notes"
               name="notes"
-              value={transaction.notes}
-              onChange={handleinput}
+              {...register("notes", { required: true })}
             ></textarea>
-            {error.notes && <p style={{ color: "red" }}>{error.notes}</p>}
+            {errors.notes && <p style={{ color: "red" }}>{errors.notes.message}</p>}
           </div>
           <br />
-          <button type="submit"> Submit</button>
-          {error.success && (
-            <p style={{ color: "green", fontSize: 30 }}>{error.success}</p>
-          )}
+          <div>
+                  <input className="addtransactionback1" type="submit"></input>
+                </div>
+          {/* <button type="submit"> Submit</button> */}
+         
         </form>
       </div>
     </>
