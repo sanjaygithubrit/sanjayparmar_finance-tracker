@@ -2,10 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./Alltransaction.css";
 import { Link } from "react-router-dom";
 import { Table } from "./Component/Table";
-
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import {Tabledata} from "../../src/Context/Context";
 
 export const Alltransaction = () => {
+
+    const {datastate} = useContext(Tabledata);
+    // console.log(data,"context");
+
     const [alltransaction, setAlltransaction] = useState([]);
 
     const [groupby, setGroupby] = useState([]);
@@ -20,7 +25,7 @@ export const Alltransaction = () => {
     ];
 
     useEffect(() => {
-        setAlltransaction(JSON.parse(localStorage.getItem("Transaction") || "[]"));
+        setAlltransaction(datastate);
     }, []);
 
     const navigate = useNavigate();

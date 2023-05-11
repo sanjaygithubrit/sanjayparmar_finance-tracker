@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import "../Alltransaction.css";
 import { useNavigate } from "react-router-dom";
-
+import { id } from "date-fns/locale";
+import { Tabledata } from "../../Context/Context";
 
 export const Table = (prop) => {
     const [filterval, setFilval] = useState("");
@@ -15,6 +16,7 @@ export const Table = (prop) => {
         type: "",
     });
 
+    const {datastate,setDatastate} = useContext(Tabledata);
 
     const navigate = useNavigate();
 
@@ -26,16 +28,27 @@ export const Table = (prop) => {
         navigate(`/addtransaction/${id}`);
     }
 
-    function funpage(value) {
-        setPage(value);
-       
+    function deleterecord(d_id) {
+        
+     const deletedata = [...datastate];
+     let deleterecordid = d_id - 1;
+     deletedata.splice(deleterecordid,1)
+     setDatastate(deletedata)
+     setAlldata(deletedata)
     }
 
+     useEffect(() => {
+       setAlldata(datastate)
+     }, [alldata]);
+
+    function funpage(value) {
+        setPage(value);
+    }
 
     useEffect(() => {
+        console.log("asdasda");
         setAlldata(prop.all);
-       
-    }, [prop]);
+   }, [prop]);
 
     
 
@@ -225,6 +238,7 @@ setPage(1)
                             <th onClick={() => sort("notes", "string")}>notes</th>
                             <th>View</th>
                             <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -244,6 +258,7 @@ setPage(1)
                                 <td>{alltransaction.notes}</td>
                                 <td onClick={() => View(alltransaction)}>View </td>
                                 <td onClick={() => edit(alltransaction.id)}>Edit</td>
+                                <td onClick={() => deleterecord(alltransaction.id)}>Delete</td>
                             </tr>
                         ))}
                     </tbody>

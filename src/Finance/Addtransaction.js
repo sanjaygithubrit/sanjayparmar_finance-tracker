@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 // import Validation from "./Component/validation";
 import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -6,6 +6,11 @@ import { useForm } from "react-hook-form";
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+// import { parse, isDate } from "date-fns";
+import parse from "date-fns/parse";
+import {Tabledata} from "../../src/Context/Context";
+
+import { useNavigate } from "react-router-dom";
 
 export const Addtransaction = () => {
   const [addtransaction, setAddtransaction] = useState({
@@ -18,6 +23,10 @@ export const Addtransaction = () => {
     receipt: "",
     notes: "",
   });
+
+  const {datastate,setDatastate} = useContext(Tabledata);
+
+  const navigate = useNavigate();
 
   // const [error, setError] = useState({
   //   transactiondate: "",
@@ -37,8 +46,8 @@ export const Addtransaction = () => {
     if (id === undefined) {
       console.log(id, "mm");
     } else {
-      var editdata = JSON.parse(localStorage.getItem("Transaction") || "[]");
-      console.log(editdata[id - 1]);
+      var editdata = datastate;
+   
       const value =  editdata[id - 1];
       for (let x in value) {
         setValue(x,value[x])
@@ -162,48 +171,50 @@ export const Addtransaction = () => {
   //     setTransaction(success);
   //   }
   // }
+  // function parseDateString(value, originalValue) {
+  //   const parsedDate = isDate(originalValue)
+  //     ? originalValue
+  //     : parse(originalValue, "yyyy-MM-dd", new Date());
+  
+  //   return parsedDate;
+  // }
+
   const today = new Date();
 
   let userSchema = yup.object().shape({
-    transactiondate: yup.date()
-      .typeError("Transaction Date is Required")
-      .max(today, "Enter Valid Transaction Date"),
+    transactiondate: yup.string()
+    .required("Transaction Date is Required")
+    .max(today, "Enter Valid Transaction Date"),
       month: yup.string().required("Month Year is Required"),
       transactiontype: yup.string().required("Transaction Type is Required"),
       fromaccount: yup.string().required("From Account  is Required"),
    
       toaccount:yup.string().required("To Account  is Required").notOneOf([yup.ref("fromaccount")],"From and to must not be same") ,
       amount: yup.string().required("Amount  is Required"),
-     receipt:yup.mixed().test("requird", "The file is required", (value) => {
-console.log(typeof value );
-      if (typeof value==="string") {
-        // console.log("aa");
-        return true} 
-        else{
-          // console.log("zz");
-          return false;
-        }
-
-  }).test("fileSize", "The file is too large", (value) => {
-    console.log(value[0].size,"mm");
-          if (value && value[0].size <= 50000000)
-           {
-            return true} 
-          else{
-            return false;
-          }
-        
-      }).test("type", "Only the following formats are accepted: .jpeg, .jpg,.png,.bmp", (value) => {
-        if (!value.length) return true 
-        return value && (
-          
-            value[0].type === "image/jpeg" ||
-            value[0].type === "image/bmp" ||
-            value[0].type === "image/png" ||
-            value[0].type === "image/jpg" 
-        );
-    }),
-      notes: yup
+     receipt:yup.mixed().test("required", "You need to provide a file", (value) => {
+      // return file && file.size <-- u can use this if you don't want to allow empty files to be uploaded;
+      if (value.length > 0) {  
+        return true;
+      }
+      return false;
+      
+    }).test("type", "We only support jpeg and jpg format", function (value) {
+      if (typeof value ==="string") {
+        return true;
+      }else{
+        console.log("sanjjjjjjjjjjjj");
+        return value[0] && (value[0].type === "image/jpg" || value[0].type === "image/jpeg" || value[0].type === "image/png");
+      }
+    }).test("fileSize", "The file is too large", (value) => {
+      console.log(typeof value,"jjjj");
+      if (typeof value ==="string") {
+        return true;
+      }else{
+        return value[0] && value[0].size <= 2000000;
+      }
+      // console.log(value[0].size,"size");
+}),
+      notes: yup  
       .string("notes should be a string") 
       .trim()
       .required("Notes is a required field")
@@ -243,24 +254,25 @@ console.log(data.receipt,"reciptttt");
     setAddtransaction(data)
    
     if (data.id === undefined) {
-      var data1 =  JSON.parse(localStorage.getItem("Transaction") || "[]");
+      var data1 =  datastate;
 
       var id =  data1.length + 1;
    
       data.id = id;
 
       data1.push(data);
-
-      localStorage.setItem('Transaction', JSON.stringify(data1));
+setDatastate(data1)
+navigate("/alltransaction");
+      // localStorage.setItem('Transaction', JSON.stringify(data1));
       
       } 
       else {
 
-          var editdata =  JSON.parse(localStorage.getItem("Transaction") || "[]");
+          var editdata =  datastate;
 
           editdata[data.id-1]= data;
-
-          localStorage.setItem('Transaction', JSON.stringify(editdata));
+setDatastate(editdata)
+          // localStorage.setItem('Transaction', JSON.stringify(editdata));
 
       }
     // var get = JSON.parse(localStorage.getItem("addtransaction") || "[]");
@@ -271,6 +283,7 @@ console.log(data.receipt,"reciptttt");
     // // localStorage.setItem('Transaction', JSON.stringify(get));
     // localStorage.setItem("addtransaction", JSON.stringify(get));
     reset();
+    navigate("/alltransaction");
   };
 
   return (
@@ -436,5 +449,4 @@ console.log(data.receipt,"reciptttt");
     </>
   );
 };
-
 

@@ -2,12 +2,21 @@
 .App {
     text-align: center;
     }                                   
-    
-    .label{
+    .divname{
+        display: flex;
+        justify-content: center;
+    }
+    .lablestyle{
     display: block;
     font-size: larger;
-    color: white;
     padding: 5px;
+    width: 100px;
+    text-align: left;
+    }
+    .errorp{
+           display: flex;
+        justify-content: center;
+        text-align: left;
     }
     
     .input{
