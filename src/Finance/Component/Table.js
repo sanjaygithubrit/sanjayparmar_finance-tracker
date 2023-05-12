@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { id } from "date-fns/locale";
 import { Tabledata } from "../../Context/Context";
 
-export const Table = (prop) => {
+export const Table = (prop,deleterecord) => {
+
     const [filterval, setFilval] = useState("");
     const [page, setPage] = useState(1);
     const [alltransaction, setAlltransaction] = useState([]);
@@ -27,20 +28,10 @@ export const Table = (prop) => {
     function edit(id) {
         navigate(`/addtransaction/${id}`);
     }
+  
 
-    function deleterecord(d_id) {
-        
-     const deletedata = [...datastate];
-     let deleterecordid = d_id - 1;
-     deletedata.splice(deleterecordid,1)
-     setDatastate(deletedata)
-     setAlldata(deletedata)
-    }
 
-     useEffect(() => {
-       setAlldata(datastate)
-     }, [alldata]);
-
+ 
     function funpage(value) {
         setPage(value);
     }
@@ -49,8 +40,6 @@ export const Table = (prop) => {
         console.log("asdasda");
         setAlldata(prop.all);
    }, [prop]);
-
-    
 
     const pageperrecord = 3;
 
@@ -63,7 +52,7 @@ export const Table = (prop) => {
 
     useEffect(() => {
         
-
+        console.log("zzzz");
         const recordstart = (page - 1) * pageperrecord;
         const recordend = page * pageperrecord;
 
@@ -72,7 +61,7 @@ export const Table = (prop) => {
        let { column, order, type } = sorting;
        
         let  searched = [...alldata];
-  
+        console.log(datastate,"zzzz");
         if (column) {
             
             switch (type) {
@@ -182,7 +171,7 @@ setPage(1)
 
         if (e.target.value === "") {
             setPage(1);
-            setAlldata(prop.all);
+            setAlldata(datastate);
             
         } else {
             const searchdata = alldata.filter(
@@ -258,7 +247,7 @@ setPage(1)
                                 <td>{alltransaction.notes}</td>
                                 <td onClick={() => View(alltransaction)}>View </td>
                                 <td onClick={() => edit(alltransaction.id)}>Edit</td>
-                                <td onClick={() => deleterecord(alltransaction.id)}>Delete</td>
+                                <td onClick={() => prop.deleterecord(alltransaction.id)}>Delete</td>
                             </tr>
                         ))}
                     </tbody>

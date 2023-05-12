@@ -27,7 +27,9 @@ const App = () => {
             <Route path=":id" element={<Addtransaction />} />
           </Route>
 
-          <Route path="/alltransaction" element={<Alltransaction />} />
+          <Route path="/alltransaction" element={<Alltransaction />} >
+          <Route path=":id" element={<Alltransaction />} /> 
+          </Route>
           <Route path="/View" element={<View />} />
         </Route>
       </Routes>

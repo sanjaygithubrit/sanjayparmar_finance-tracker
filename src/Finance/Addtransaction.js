@@ -40,18 +40,24 @@ export const Addtransaction = () => {
   //   success:"",
   // });
 
-  let { id } = useParams();
+  var { id } = useParams();
 
   useEffect(() => {
     if (id === undefined) {
       console.log(id, "mm");
     } else {
+      console.log(id,"id");
       var editdata = datastate;
-   
-      const value =  editdata[id - 1];
+      var idd = id
+     
+      // let index = datastate.findIndex(x => x.id ===data.id);
+      let ind = editdata.findIndex(({ id }) => id == idd);
+      // console.log(ind,"index");
+      // console.log(editdata.findIndex(({ id }) => id == idd));
+      const value =  editdata[ind];
+      console.log("value",value);
       for (let x in value) {
         setValue(x,value[x])
-       
       }
       setAddtransaction(value);
 
@@ -239,6 +245,7 @@ export const Addtransaction = () => {
 function removeimage() {
   const newobj = { ...addtransaction, receipt: "" };
   setAddtransaction(newobj);
+  setValue("receipt","")
 }
 
   
@@ -256,10 +263,10 @@ console.log(data.receipt,"reciptttt");
     if (data.id === undefined) {
       var data1 =  datastate;
 
-      var id =  data1.length + 1;
-   
-      data.id = id;
-
+      var id =  datastate[data1.length - 1].id;
+   console.log(id,"beforid");
+      data.id = id + 1;
+console.log(data.id,"dataid");
       data1.push(data);
 setDatastate(data1)
 navigate("/alltransaction");
@@ -269,9 +276,10 @@ navigate("/alltransaction");
       else {
 
           var editdata =  datastate;
-
-          editdata[data.id-1]= data;
-setDatastate(editdata)
+         let index = datastate.findIndex(x => x.id ===data.id);
+         console.log(index,"index");
+          editdata[index]= data;
+           setDatastate(editdata)
           // localStorage.setItem('Transaction', JSON.stringify(editdata));
 
       }
@@ -391,6 +399,7 @@ setDatastate(editdata)
 
           <br />
           <div>
+
             <span className="form__label">Amount:</span>
 
             <input
@@ -407,7 +416,7 @@ setDatastate(editdata)
             <label htmlFor="fromfile" className="form__label">
               Receipt:
             </label>
-          {addtransaction.receipt===""?( <input
+          {addtransaction.receipt==""?( <input
                 type="file"
                 name="receipt"
                 id="fromfile"
@@ -449,4 +458,7 @@ setDatastate(editdata)
     </>
   );
 };
+
+
+
 
