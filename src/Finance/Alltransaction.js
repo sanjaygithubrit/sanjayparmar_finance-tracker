@@ -8,11 +8,8 @@ import {Tabledata} from "../../src/Context/Context";
 
 export const Alltransaction = () => {
 
-    const {datastate,setDatastate} = useContext(Tabledata);
-    // console.log(data,"context");
-
+   
     const [alltransaction, setAlltransaction] = useState([]);
-
     const [groupby, setGroupby] = useState([]);
     const [grp, setGrp] = useState(false);
     const [groupvalue, setGroupvalue] = useState("");
@@ -23,10 +20,14 @@ export const Alltransaction = () => {
         { value: "toaccount", label: "To Account" },
         { value: "none", label: "none" },
     ];
-
+    const {datastate,setDatastate} = useContext(Tabledata);
     useEffect(() => {
         setAlltransaction(datastate);
     }, []);
+
+    useEffect(() => {
+       setAlltransaction(datastate);
+    }, [datastate]);
 
     const navigate = useNavigate();
 
@@ -34,35 +35,21 @@ export const Alltransaction = () => {
         localStorage.removeItem("Token");
         navigate("/login");
     }
-       function deleterecord(d_id) {
-                console.log(d_id,"as");
-            let deletedata = [...datastate];
-            //  let deleterecordid = d_id - 1;
+    function deleterecord(d_id) {
+              let deletedata = [...datastate];
             let filterdata = deletedata.filter(item => item.id !== d_id)
-            //  deletedata.splice(deleterecordid,1)
             setDatastate(filterdata)
-
             }
 
-            useEffect(() => {
-                console.log(datastate,"dataaaaa");
-                setAlltransaction(datastate);
-            }, [datastate]);
-
+        
     function group(event) {
         setGroupvalue(event.target.value)
-        // const grouptype = event.target.value;
-       
     }     
 
     useEffect(() => {
-        console.log(datastate,"dataaaaa");
-        // setAlltransaction(datastate);
-        console.log(groupvalue,"sasas");
         if (groupvalue=="") {
             
         } else {
-            console.log("pppp");
             groupbydata()
         }
             
@@ -135,3 +122,4 @@ export const Alltransaction = () => {
         </>
     );
 };
+

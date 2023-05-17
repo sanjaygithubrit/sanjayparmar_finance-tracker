@@ -9,9 +9,7 @@ import reportWebVitals from './reportWebVitals';
 import { Tabledata } from './Context/Context';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-
       <App />
-
 );
 
 

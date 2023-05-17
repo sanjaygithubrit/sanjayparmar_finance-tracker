@@ -6,7 +6,6 @@ export const Tabledata = createContext();
 
 
 export function Main({children}) {
-console.log({children});
     const [datastate,setDatastate] = useState([{
         id:1,
         transactiondate: "2023-05-02",

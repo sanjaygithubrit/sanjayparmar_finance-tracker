@@ -12,15 +12,12 @@ export default function Authentication () {
    }else{
     return <Navigate to={"/login"}/>
    }
-
-    // return auth ? <Outlet/> : <Navigate to={"/login"}/>
     
 }
 
 export  function Authenticationlogin () {
     const registerdata = localStorage.getItem("Register")
-    console.log(registerdata,"sanjayaas");
-    
+   
     const auth = localStorage.getItem("Token");
     
      return auth ? <Navigate to={"/alltransaction"}/>: <Outlet/>

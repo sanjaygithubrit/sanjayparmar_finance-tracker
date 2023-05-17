@@ -1,20 +1,12 @@
 import { useState } from "react";
 import "./Register.css";
-// import Registervalidation from "./Registervalidation";
+
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function Register() {
-  // States for registration
-
-//   const [registerfild, setRegisterfild] = useState({
-//     name: "",
-//     email: "",
-//     password: "",
-//   });
-
   let userSchema = yup.object().shape({
     name: yup
       .string("name should be a string")
@@ -34,12 +26,9 @@ export default function Register() {
           );
 
           function already(rdata) {
-            console.log(rdata);
             return rdata.email === value;
-            // return rdata.email === value
           }
           const compare = registerdata.find(already);
-          console.log(compare, "compare");
           if (compare === undefined) {
             return true;
           } else {
@@ -61,21 +50,9 @@ export default function Register() {
     reset,
   } = useForm({ resolver: yupResolver(userSchema) });
 
-  // const [error, setError] = useState({
-  //     name: "",
-  //     email: "",
-  //     password: "",
-  // });
   const [submitted, setSubmitted] = useState(false);
 
   const navigate = useNavigate();
-
-  // function handleinput(event) {
-
-  //     const newobj = { ...register, [event.target.name]: event.target.value }
-  //     setRegister(newobj)
-
-  // }
 
   function redirectlogin() {
     navigate("/login");
@@ -93,14 +70,7 @@ export default function Register() {
     localStorage.setItem("Register", JSON.stringify(registerarray));
     setSubmitted(true);
     reset();
-    // e.preventDefault();
-    // const success = Registervalidation(register);
-    // setError(success)
-    // if (success.name === "" && success.email === "" && success.password === "") {
-    //     navigate("/login");
-    //     setSubmitted(true)
-    // }
-  };
+    };
 
   const successMessage = () => {
     return (

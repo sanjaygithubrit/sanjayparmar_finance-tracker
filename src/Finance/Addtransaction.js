@@ -1,15 +1,9 @@
 import { useContext, useEffect, useState } from "react";
-// import Validation from "./Component/validation";
 import { Link, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
-
-
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-// import { parse, isDate } from "date-fns";
-import parse from "date-fns/parse";
 import {Tabledata} from "../../src/Context/Context";
-
 import { useNavigate } from "react-router-dom";
 
 export const Addtransaction = () => {
@@ -28,48 +22,26 @@ export const Addtransaction = () => {
 
   const navigate = useNavigate();
 
-  // const [error, setError] = useState({
-  //   transactiondate: "",
-  //   month: "",
-  //   transactiontype: "",
-  //   fromaccount: "",
-  //   toaccount: "",
-  //   amount: "",
-  //   receipt: "",
-  //   notes: "",
-  //   success:"",
-  // });
-
   var { id } = useParams();
 
   useEffect(() => {
     if (id === undefined) {
-      console.log(id, "mm");
     } else {
-      console.log(id,"id");
-      var editdata = datastate;
+        var editdata = datastate;
       var idd = id
-     
-      // let index = datastate.findIndex(x => x.id ===data.id);
+          
       let ind = editdata.findIndex(({ id }) => id == idd);
-      // console.log(ind,"index");
-      // console.log(editdata.findIndex(({ id }) => id == idd));
+  
       const value =  editdata[ind];
-      console.log("value",value);
+    
       for (let x in value) {
         setValue(x,value[x])
       }
       setAddtransaction(value);
 
-      console.log("sanjay");
-    }
+      }
   }, []);
 
-  // useEffect(()=>{
-
-  //        setTransaction(transaction)
-
-  //     }, [transaction])
 
   const month = [
     { label: '-- select option --', value: '' },
@@ -114,77 +86,7 @@ export const Addtransaction = () => {
     { value: "Big Block", label: "Big Block" },
   ];
 
-  // const getBase64 = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.onload = () => resolve(reader.result);
-  //     reader.onerror = (error) => reject(error);
-  //     reader.readAsDataURL(file);
-  //   });
-  // };
-
-  // const imageUpload = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file.size > 1048576) {
-  //     const newobj = { ...transaction, receipt: "size" };
-  //     setTransaction(newobj);
-  //   } else if (file.type === "image/png" ||file.type === "image/jpeg" ||file.type === "image/svg+xml" )
-  //    {
-  //     getBase64(file).then((base64) => {
-  //       const errorremove = { ...error, receipt: "",success:"" };
-     
-  //       setError(errorremove);
-  //       const newobj = { ...transaction, receipt: base64 };
-  //       setTransaction(newobj);
-  //       // console.log(base64, "base64");
-  //       console.debug("file stored", base64);
-  //     });
-  //   } else {
-  //     const newobj = { ...transaction, receipt: "type" };
-  //     setTransaction(newobj);
-  //   }
-  // };
-
-  // function handleinput(event) {
-  //   const newobj = { ...transaction, [event.target.name]: event.target.value };
-  //   const errorremove = { ...error, [event.target.name]: "",success:"" };
-     
-  //   setError(errorremove);
-  //   setTransaction(newobj);
-  // }
-
-  // function removeimage() {
-  //   const newobj = { ...transaction, receipt: "" };
-  //   setTransaction(newobj);
-  // }
-
-  // function submitform(e) {
-  //   e.preventDefault();
-  //   const success = Validation(transaction);
-  //   setError(success);
-
-  //   if (
-  //     success.transactiondate === "" &&
-  //     success.month === "" &&
-  //     success.transactiontype === "" &&
-  //     success.fromaccount === "" &&
-  //     success.toaccount === "" &&
-  //     success.amount === "" &&
-  //     success.receipt === "" &&
-  //     success.notes === ""
-  //   ) {
-
-  //     setTransaction(success);
-  //   }
-  // }
-  // function parseDateString(value, originalValue) {
-  //   const parsedDate = isDate(originalValue)
-  //     ? originalValue
-  //     : parse(originalValue, "yyyy-MM-dd", new Date());
   
-  //   return parsedDate;
-  // }
-
   const today = new Date();
 
   let userSchema = yup.object().shape({
@@ -208,24 +110,24 @@ export const Addtransaction = () => {
       if (typeof value ==="string") {
         return true;
       }else{
-        console.log("sanjjjjjjjjjjjj");
+     
         return value[0] && (value[0].type === "image/jpg" || value[0].type === "image/jpeg" || value[0].type === "image/png");
       }
     }).test("fileSize", "The file is too large", (value) => {
-      console.log(typeof value,"jjjj");
+  
       if (typeof value ==="string") {
         return true;
       }else{
         return value[0] && value[0].size <= 2000000;
       }
-      // console.log(value[0].size,"size");
+
 }),
       notes: yup  
       .string("notes should be a string") 
       .trim()
       .required("Notes is a required field")
       .min(2, "Notes Min 2 character"),
-    // createdOn: date().default(() => new Date()),
+    
   });
 
   const {
@@ -248,48 +150,33 @@ function removeimage() {
   setValue("receipt","")
 }
 
+    const onSubmitHandler = async(data) => {
   
-  const onSubmitHandler = async(data) => {
-console.log(data.receipt,"reciptttt");
     if (typeof (data.receipt) !== "string") {
       let url = await bs(data.receipt[0])
-
       data.receipt = url;
   }
-
 
     setAddtransaction(data)
    
     if (data.id === undefined) {
       var data1 =  datastate;
-
       var id =  datastate[data1.length - 1].id;
-   console.log(id,"beforid");
       data.id = id + 1;
-console.log(data.id,"dataid");
       data1.push(data);
 setDatastate(data1)
 navigate("/alltransaction");
-      // localStorage.setItem('Transaction', JSON.stringify(data1));
-      
+
+        
       } 
       else {
-
-          var editdata =  datastate;
+         var editdata =  datastate;
          let index = datastate.findIndex(x => x.id ===data.id);
-         console.log(index,"index");
-          editdata[index]= data;
+           editdata[index]= data;
            setDatastate(editdata)
-          // localStorage.setItem('Transaction', JSON.stringify(editdata));
-
+         
       }
-    // var get = JSON.parse(localStorage.getItem("addtransaction") || "[]");
-    // var id = get.length + 1;
-    // data.id = id;
-    // get.push(data);
 
-    // // localStorage.setItem('Transaction', JSON.stringify(get));
-    // localStorage.setItem("addtransaction", JSON.stringify(get));
     reset();
     navigate("/alltransaction");
   };
@@ -458,7 +345,3 @@ navigate("/alltransaction");
     </>
   );
 };
-
-
-
-

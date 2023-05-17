@@ -1,7 +1,6 @@
 import React, { useState, useEffect,useContext } from "react";
 import "../Alltransaction.css";
 import { useNavigate } from "react-router-dom";
-import { id } from "date-fns/locale";
 import { Tabledata } from "../../Context/Context";
 
 export const Table = (prop,deleterecord) => {
@@ -29,16 +28,12 @@ export const Table = (prop,deleterecord) => {
         navigate(`/addtransaction/${id}`);
     }
   
-
-
- 
     function funpage(value) {
         setPage(value);
     }
 
     useEffect(() => {
-        console.log("asdasda");
-        setAlldata(prop.all);
+     setAlldata(prop.all);
    }, [prop]);
 
     const pageperrecord = 3;
@@ -52,7 +47,6 @@ export const Table = (prop,deleterecord) => {
 
     useEffect(() => {
         
-        console.log("zzzz");
         const recordstart = (page - 1) * pageperrecord;
         const recordend = page * pageperrecord;
 
@@ -61,7 +55,6 @@ export const Table = (prop,deleterecord) => {
        let { column, order, type } = sorting;
        
         let  searched = [...alldata];
-        console.log(datastate,"zzzz");
         if (column) {
             
             switch (type) {
@@ -149,7 +142,6 @@ export const Table = (prop,deleterecord) => {
                     tempsorting.type = type;
                     break;
                 default:
-                    console.log("sanjay");
                     tempsorting.order = "";
                     tempsorting.column=column;
                     tempsorting.type = type;
@@ -266,10 +258,7 @@ setPage(1)
                     )}
                 </div>
             </div>}
-            
-
-
-        </>
+            </>
     );
 };
 

@@ -1,24 +1,13 @@
-import { useState } from "react";
 import "./Register.css";
-// import Loginvalidation from "./Loginvalidation";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+
 export default function Login() {
-  // States for registration
+  const navigate = useNavigate();
 
-//   const [login, setLogin] = useState({
-//     email: "",
-//     password: "",
-//   });
-
-//   const [error, setError] = useState({
-//     email: "",
-//     password: "",
-//     //    emailpassword:"",
-//   });
   let userSchema = yup.object().shape({
     email: yup
       .string()
@@ -28,12 +17,10 @@ export default function Login() {
         var registerdata = JSON.parse(localStorage.getItem("Register") || "[]");
 
         function already(rdata) {
-          console.log(rdata);
           return rdata.email === value;
-          // return rdata.email === value
+        
         }
         const compare = registerdata.find(already);
-        console.log(compare, "compare");
         if (compare === undefined) {
           return false;
         } else {
@@ -49,12 +36,9 @@ export default function Login() {
         var registerdata = JSON.parse(localStorage.getItem("Register") || "[]");
 
         function already(rdata) {
-          console.log(rdata);
           return rdata.password === value;
-          // return rdata.email === value
         }
         const compare = registerdata.find(already);
-        console.log(compare, "compare");
         if (compare === undefined) {
           return false;
         } else {
@@ -62,16 +46,6 @@ export default function Login() {
         }
       }),
   });
-  // const [submitted, setSubmitted] = useState(false);
-
-  const navigate = useNavigate();
-
-  // function handleinput(event) {
-
-  //     const newobj = { ...login, [event.target.name]: event.target.value }
-  //     setLogin(newobj)
-
-  // }
 
   function redirectregister() {
     navigate("/register");
@@ -85,9 +59,7 @@ export default function Login() {
   } = useForm({ resolver: yupResolver(userSchema) });
 
   const handlelogin = (data) => {
-    console.log(data, "login data");
-
-    function stringGen(len) {
+      function stringGen(len) {
       var text = "";
 
       var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -102,29 +74,7 @@ export default function Login() {
 
     localStorage.setItem("Token", Token);
     navigate("/alltransaction");
-    // e.preventDefault();
-
-    // const success = Loginvalidation(login);
-
-    // setError(success)
-
-    // if (success.emailpassword === "Success") {
-    //     setSubmitted(true)
-    //     navigate("/alltransaction")
-    // }
   };
-
-  // const successMessage = () => {
-  //     return (
-  //         <div
-  //             className="Success"
-  //             style={{
-  //                 display: submitted ? '' : 'none',
-  //             }}>
-  //             <h1>Successfully Login</h1>
-  //         </div>
-  //     );
-  // };
 
   return (
     <div className="App">
@@ -133,12 +83,7 @@ export default function Login() {
           <h1>User Login</h1>
         </div>
 
-        {/* <div className="messages">
-
-                    {successMessage()}
-                </div> */}
-
-        <form onSubmit={handleSubmit(handlelogin)}>
+          <form onSubmit={handleSubmit(handlelogin)}>
           <div className="divname">
             <label className="lablestyle">Email</label>
             <input
