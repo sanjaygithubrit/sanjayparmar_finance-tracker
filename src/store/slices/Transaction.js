@@ -13,7 +13,7 @@ import { createSlice } from "@reduxjs/toolkit";
   }]
 
 const transactionSlice = createSlice({
-  name: "transaction",
+  name: "transactions",
   initialState ,
   reducers: {
 
@@ -38,12 +38,15 @@ const transactionSlice = createSlice({
       const editdata = action.payload.data;
       const editid = action.payload.id;
       let index = state.findIndex((x) => x.id === editid);
-
       state.splice(index, 1, editdata);
     },
 
     deletetransactiondata(state, action) {
-
+      const deleteid = action.payload;
+      // let index = state.findIndex((x) => x.id === deleteid);
+      let filterdata = state.filter(item => item.id !== deleteid)
+      return filterdata
+      // return state.splice(index, 1);
     }
   },
 });

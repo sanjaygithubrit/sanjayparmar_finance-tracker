@@ -5,99 +5,85 @@ import "../../src/assets/style/Alltransaction.css"
 
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux"
-import { addtransactiondata,edittransactiondata,deletetransactiondata } from "../store/slices/Transaction";
-
+import { addtransactiondata,edittransactiondata } from "../store/slices/Transaction";
+import { month,transactiontype,fromaccount,toaccount,transaction } from "../assets/constant/constant";
 export const Addtransaction = () => {
 
     const dispatch = useDispatch();
 
-  const [addtransaction, setAddtransaction] = useState({
-    transactiondate: "",
-    month: "",
-    transactiontype: "",
-    fromaccount: "",
-    toaccount: "",
-    amount: "",
-    receipt: "",
-    notes: "",
-  });
+  const [addtransaction, setAddtransaction] = useState(transaction);
 
  
-//   const navigate = useNavigate();
+  const navigate = useNavigate();
 
 const transactiondata = useSelector((state)=> state.transactions)
 
 
-  const month = [
-    { label: '-- select option --', value: '' },
-    { value: "Jan 2023", label: "Jan 2023" },
-    { value: "Feb 2023", label: "Feb 2023" },
-    { value: "Mar 2023", label: "Mar 2023" },
-    { value: "Arp 2023", label: "Arp 2023" },
-    { value: "May 2023", label: "May 2023" },
-    { value: "Jun 2023", label: "Jun 2023" },
-    { value: "Jul 2023", label: "Jul 2023" },
-    { value: "Aug 2023", label: "Aug 2023" },
-    { value: "Sep 2023", label: "Sep 2023" },
-    { value: "Oct 2023", label: "Oct 2023" },
-    { value: "Nov 2023", label: "Nov 2023" },
-    { value: "Des 2023", label: "Des 2023" },
-  ];
+  // const month = [
+  //   { label: '-- select option --', value: '' },
+  //   { value: "Jan 2023", label: "Jan 2023" },
+  //   { value: "Feb 2023", label: "Feb 2023" },
+  //   { value: "Mar 2023", label: "Mar 2023" },
+  //   { value: "Arp 2023", label: "Arp 2023" },
+  //   { value: "May 2023", label: "May 2023" },
+  //   { value: "Jun 2023", label: "Jun 2023" },
+  //   { value: "Jul 2023", label: "Jul 2023" },
+  //   { value: "Aug 2023", label: "Aug 2023" },
+  //   { value: "Sep 2023", label: "Sep 2023" },
+  //   { value: "Oct 2023", label: "Oct 2023" },
+  //   { value: "Nov 2023", label: "Nov 2023" },
+  //   { value: "Des 2023", label: "Des 2023" },
+  // ];
 
-  const transactiontype = [
-    { label: '-- select option --', value: '' },
-    { value: "Home Expense", label: "Home Expense" },
-    { value: "Personal Expense", label: "Personal Expense" },
-    { value: "Income", label: "Income" },
-  ];
+  // const transactiontype = [
+  //   { label: '-- select option --', value: '' },
+  //   { value: "Home Expense", label: "Home Expense" },
+  //   { value: "Personal Expense", label: "Personal Expense" },
+  //   { value: "Income", label: "Income" },
+  // ];
 
-  const fromaccount = [
-    { label: '-- select option --', value: '' },
-    { value: "Personal Account", label: "Personal Account" },
-    { value: "Real Living", label: "Real Living" },
-    { value: "My Dream Home", label: "My Dream Home" },
-    { value: "Full Circle", label: "Full Circle" },
-    { value: "Core Realtors", label: "Core Realtors" },
-    { value: "Big Block", label: "Big Block" },
-  ];
+  // const fromaccount = [
+  //   { label: '-- select option --', value: '' },
+  //   { value: "Personal Account", label: "Personal Account" },
+  //   { value: "Real Living", label: "Real Living" },
+  //   { value: "My Dream Home", label: "My Dream Home" },
+  //   { value: "Full Circle", label: "Full Circle" },
+  //   { value: "Core Realtors", label: "Core Realtors" },
+  //   { value: "Big Block", label: "Big Block" },
+  // ];
 
-  const toaccount = [
-    { label: '-- select option --', value: '' },
-    { value: "Personal Account", label: "Personal Account" },
-    { value: "Real Living", label: "Real Living" },
-    { value: "My Dream Home", label: "My Dream Home" },
-    { value: "Full Circle", label: "Full Circle" },
-    { value: "Core Realtors", label: "Core Realtors" },
-    { value: "Big Block", label: "Big Block" },
-  ];
-
+  // const toaccount = [
+  //   { label: '-- select option --', value: '' },
+  //   { value: "Personal Account", label: "Personal Account" },
+  //   { value: "Real Living", label: "Real Living" },
+  //   { value: "My Dream Home", label: "My Dream Home" },
+  //   { value: "Full Circle", label: "Full Circle" },
+  //   { value: "Core Realtors", label: "Core Realtors" },
+  //   { value: "Big Block", label: "Big Block" },
+  // ];
+ 
   var { id } = useParams();
 
   useEffect(() => {
     if (id === undefined) {
-      console.log("mm");
+
     } else {
-      console.log(id  ,"id");
+      
       var editdata =[...transactiondata];
       var idd = id
-     console.log(editdata);
+
       let index = editdata.findIndex(x => x.id == idd);
-    //   let ind = editdata.findIndex(({ id }) => id == idd);
-      console.log(index,"iddddddddddddddddddd");
-      // console.log(ind,"index");
-      // console.log(editdata.findIndex(({ id }) => id == idd));
+
       const value =  editdata[index];
-      console.log("value",value);
+
       for (let x in value) {
         setValue(x,value[x])
       }
       setAddtransaction(value);
-
-      console.log("sanjay");
-    }
+     }
   }, []);
 
   const today = new Date();
@@ -118,7 +104,7 @@ const transactiondata = useSelector((state)=> state.transactions)
         return true;
       }
       return false;
-      
+
     }).test("type", "We only support jpeg and jpg format", function (value) {
       if (typeof value ==="string") {
         return true;
@@ -133,14 +119,12 @@ const transactiondata = useSelector((state)=> state.transactions)
       }else{
         return value[0] && value[0].size <= 2000000;
       }
-      // console.log(value[0].size,"size");
-}),
+    }),
       notes: yup  
       .string("notes should be a string") 
       .trim()
       .required("Notes is a required field")
       .min(2, "Notes Min 2 character"),
-    // createdOn: date().default(() => new Date()),
   });
 
   const {
@@ -165,10 +149,9 @@ function removeimage() {
 
   const onSubmitHandler = async(data) => {
 
-    console.log(data,"padsd");
         if (typeof (data.receipt) !== "string") {
       let url = await bs(data.receipt[0])
-console.log("asasaaaaaaa");
+
 data.receipt = url;
   }
 
@@ -176,30 +159,27 @@ if (id) {
 
  let editdata = {...data}
     dispatch(edittransactiondata({id:id,data:editdata}))
-    reset();
+  
 } else {
 
     let newdata= {...data}
     const len = transactiondata.reduce(sum => sum + 1, 0);
     const addid = transactiondata[len-1].id 
     newdata.id = addid+1;
-      //   state[len-1].id = len ;
-      console.log(newdata,"payload");
       dispatch(addtransactiondata(newdata))
-reset();
+
 }
-
-
-
+reset();
+navigate("/alltransaction");
   };
 
   return (
     <>
       <div className="finance">
         <h1 className="addmaindiv"> Finance Tracker</h1>
-        {/* <div className="addmaindiv">
+        <div className="addmaindiv">
           <Link to="/alltransaction"> Alltransaction </Link>
-        </div> */}
+        </div>
       </div>
 
       <div className="addtransaction">
