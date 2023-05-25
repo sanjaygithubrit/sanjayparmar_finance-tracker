@@ -32,7 +32,7 @@ export const View = () => {
             </tr>
             <tr>
                 <td>Receipt:</td>
-                <td><img src={location.state.receipt} /></td>
+                <td><img src={location.state.receipt} alt="img" /></td>
             </tr>
             <tr>
                 <td>Amount:</td>
