@@ -6,6 +6,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "./store/slices/Users";
+
+
 export default function Register() {
 
   const [submitted, setSubmitted] = useState(false);
@@ -32,7 +34,7 @@ export default function Register() {
           var registerdata = registeralldata;
           function already(rdata) {
           return rdata.email === value;
-         
+
           }
           const compare = registerdata.find(already);
             if (compare === undefined) {

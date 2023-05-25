@@ -37,7 +37,23 @@ export const Alltransaction = () => {
             
         } else {
             console.log("pppp");
-            groupbydata()
+            const groupBy = (array, key) => {
+                let sanjay = array.reduce((result, currentValue) => {
+                    (result[currentValue[key]] = result[currentValue[key]] || []).push(
+                        currentValue
+                    );
+                    return result;
+                }, []);
+                return sanjay;
+            };
+    
+            if (groupvalue === "none") {
+                setGrp(false)
+            } else {
+                const personGroupedByColor = groupBy(transactionalldata, groupvalue);
+                setGroupby(personGroupedByColor);
+                setGrp(true);
+            }
         }
             
     }, [groupvalue,transactionalldata]);
@@ -56,25 +72,6 @@ export const Alltransaction = () => {
         setGroupvalue(event.target.value)
              
     }     
-    function groupbydata() {
-        const groupBy = (array, key) => {
-            let sanjay = array.reduce((result, currentValue) => {
-                (result[currentValue[key]] = result[currentValue[key]] || []).push(
-                    currentValue
-                );
-                return result;
-            }, []);
-            return sanjay;
-        };
-
-        if (groupvalue === "none") {
-            setGrp(false)
-        } else {
-            const personGroupedByColor = groupBy(alltransaction, groupvalue);
-            setGroupby(personGroupedByColor);
-            setGrp(true);
-        }
-    }
 
     return (
         <>

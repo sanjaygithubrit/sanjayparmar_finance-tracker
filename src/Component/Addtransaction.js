@@ -263,13 +263,14 @@ navigate("/alltransaction");
                   setAddtransaction(newobj)
                   }}, { required: true })}
               />):( 
-                <div><img src={addtransaction.receipt} />
+                <div>
+                <img src={addtransaction.receipt} />
                 <span style={{ color: "red" }} onClick={removeimage} >remove</span></div>)}
               <div>
              
               {errors.receipt && <p style={{ color: "red" }}>{errors.receipt.message}</p>}
               </div>
-                       
+                      
           </div>
           <br />
           <div>
@@ -290,6 +291,8 @@ navigate("/alltransaction");
     </>
   );
 };
+
+
 
 
 

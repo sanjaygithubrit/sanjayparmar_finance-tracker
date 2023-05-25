@@ -63,7 +63,7 @@ export default function Login() {
   } = useForm({ resolver: yupResolver(userSchema) });
 
   const handlelogin = (data) => {
-    data.preventDefault();
+  
     function stringGen(len) {
       var text = "";
 
