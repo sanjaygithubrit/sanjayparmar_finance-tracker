@@ -12,17 +12,7 @@ import { addtransactiondata,edittransactiondata } from "../../store/slices/Trans
 import { month,transactiontype,fromaccount,toaccount,transaction } from "../../assets/constant/constant";
 import { RootState } from "../../store/index";
 
-// export interface Addtransactiontype {
-//   id:any;
-//   transactiondate:string;
-//   month:string;
-//   transactiontype: string;
-//   fromaccount: string;
-//   toaccount: string;
-//   amount: any;
-//   receipt:string; 
-//   notes: string;
-//   }
+
 
 
 export const Addtransaction:React.FC = () => {
@@ -45,7 +35,7 @@ const transactiondata = useSelector((state:RootState)=> state.transactions)
       var editdata =[...transactiondata];
       var idd = id
 
-      let index = editdata.findIndex(x => x.id == Number(idd) );
+      let index = editdata.findIndex(x => x.id === Number(idd) );
 
       const value:any =  editdata[index];
       let x:any
@@ -54,7 +44,7 @@ const transactiondata = useSelector((state:RootState)=> state.transactions)
       }
       setAddtransaction(value);
     } 
-  }, []);
+  },[]);
 
   const today = new Date();
 
@@ -65,7 +55,6 @@ const transactiondata = useSelector((state:RootState)=> state.transactions)
       month: yup.string().required("Month Year is Required"),
       transactiontype: yup.string().required("Transaction Type is Required"),
       fromaccount: yup.string().required("From Account  is Required"),
-   
       toaccount:yup.string().required("To Account  is Required").notOneOf([yup.ref("fromaccount")],"From and to must not be same") ,
       amount: yup.string().required("Amount  is Required"),
      receipt:yup.mixed().test("required", "You need to provide a file", (value: any | undefined) => {
@@ -120,9 +109,9 @@ function removeimage() {
   const onSubmitHandler = async(data:any) => {
 
         if (typeof (data.receipt) !== "string") {
-      let url = await bs(data.receipt[0])
+        let url = await bs(data.receipt[0])
 
-data.receipt = url;
+        data.receipt = url;
   }
 
 if (id) {
@@ -145,6 +134,7 @@ navigate("/alltransaction");
 
   return (
     <>
+ 
       <div className="finance">
         <h1 className="addmaindiv"> Finance Tracker</h1>
         <div className="addmaindiv">
@@ -230,7 +220,6 @@ navigate("/alltransaction");
           <div>
             <span className="form__label">toaccount:</span>
             <select
-           
 
               {...register("toaccount", { required: true })}
             >
@@ -265,18 +254,20 @@ navigate("/alltransaction");
             <label htmlFor="fromfile" className="form__label">
               Receipt:
             </label>
-          {addtransaction.receipt==""?( <input
+          {addtransaction.receipt===""?( <input
                 type="file"
           
                 id="fromfile"
+                
                 {...register("receipt", {onChange: async (e) => {
                   let file = await bs(e.target.files[0])
-                  const newobj = { ...addtransaction};
+                  const newobj = { ...addtransaction, receipt:file};
       
                   setAddtransaction(newobj)
                   }})}
               />):( 
                 <div>
+                   <img src={addtransaction.receipt} alt="sde" />
                 <span style={{ color: "red" }} onClick={removeimage} >remove</span></div>)}
               <div>
              
@@ -284,6 +275,7 @@ navigate("/alltransaction");
               </div>
                        
           </div>
+          
           <br />
           <div>
             <span className="form__label">Notes:</span>

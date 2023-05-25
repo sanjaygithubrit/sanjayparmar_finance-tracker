@@ -36,7 +36,7 @@ export const Alltransaction:React.FC = () => {
 
     useEffect(() => {
         setAlltransaction(transactionalldata);
-        if (groupvalue=="") {
+        if (groupvalue==="") {
             
         } else {
                 const groupBy = (array:any, key:any) => {

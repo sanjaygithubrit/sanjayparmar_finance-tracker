@@ -1,7 +1,6 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect } from "react";
 import "../../../assets/style/Alltransaction.css";
 import { useNavigate } from "react-router-dom";
-import { Alltransaction } from "../Alltransaction";
 import { Alltransactiontype } from "../../../assets/constant/constant";
 
 
@@ -175,8 +174,8 @@ export const Table = (prop:propstype) => {
             setAlldata(prop.all);
             
         } else {
-            const searchdata = alldata.filter(
-                (item:any) =>
+             const searchdata = alldata.filter(
+                (item:any) =>              
                     item.transactiondate
                         .toLowerCase()
                         .includes(e.target.value.toLowerCase()) ||
@@ -190,6 +189,7 @@ export const Table = (prop:propstype) => {
                     item.toaccount.toLowerCase().includes(e.target.value.toLowerCase()) ||
                     item.amount.toLowerCase().includes(e.target.value.toLowerCase()) ||
                     item.notes.toLowerCase().includes(e.target.value.toLowerCase())
+             
             );
             setPage(1); 
             setAlldata(searchdata);
@@ -240,10 +240,10 @@ export const Table = (prop:propstype) => {
                                 <td>{alltransaction.fromaccount}</td>
                                 <td>{alltransaction.toaccount}</td>
                                 <td>
-                                    {new Intl.NumberFormat("en-IN").format(alltransaction.amount)}
+                                    {new Intl.NumberFormat("en-IN").format(Number(alltransaction.amount))}
                                 </td>
                                 <td>
-                                    <img src={alltransaction.receipt} />
+                                    <img src={alltransaction.receipt} alt="img"/>
                                 </td>
                                 <td>{alltransaction.notes}</td>
                                 <td onClick={() => View(alltransaction)}>View </td>
@@ -268,8 +268,6 @@ export const Table = (prop:propstype) => {
                 </div>
             </div>}
             
-
-
         </>
     );
 };

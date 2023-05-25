@@ -68,7 +68,7 @@ export interface Alltransactiontype {
   transactiontype: string;
   fromaccount: string;
   toaccount: string;
-  amount: number;
+  amount: string;
   receipt:string; 
   notes: string;
   }

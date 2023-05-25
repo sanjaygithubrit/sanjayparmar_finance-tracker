@@ -23,7 +23,7 @@ const usersSlice = createSlice({
         // console.log(action.payload,"state");
       const registerdata = action.payload;
    
-        console.log(registerdata);
+        // console.log(registerdata);
       state.push(registerdata);
     //   console.log(state,"statte");
     },
