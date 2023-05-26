@@ -31,20 +31,9 @@ const transactionSlice = createSlice({
   reducers: {
 
     addtransactiondata(state:initialtype[], action: PayloadAction<any>) {
-        console.log(action.payload,"state");
+
       const adddata = action.payload;
-    //   console.log(state);
-    //   console.log(adddata,"first");
-    //   const len = state.reduce(sum => sum + 1, 0);
-      
-    //   console.log(len);
-    //   console.log(adddata,"ade");
-    //   const addid = state[len-1].id 
-    //   console.log(addid,"addidd");
-    //   adddata.id = addid+1;
-    //   state[len-1].id = len ;
-      state.push(adddata);
-      console.log(state,"statte");
+         state.push(adddata);
     },
 
     edittransactiondata(state:initialtype[], action: PayloadAction<any>) {
@@ -56,10 +45,10 @@ const transactionSlice = createSlice({
 
     deletetransactiondata(state:initialtype[], action: PayloadAction<any>) {
       const deleteid = action.payload;
-      // let index = state.findIndex((x) => x.id === deleteid);
+      
       let filterdata = state.filter(item => item.id !== deleteid)
       return filterdata
-      // return state.splice(index, 1);
+      
     }
   },
 });

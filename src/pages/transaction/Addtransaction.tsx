@@ -2,7 +2,6 @@ import {  useEffect, useState } from "react";
 import {  useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import "../../assets/style/Alltransaction.css"
-
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
@@ -12,25 +11,19 @@ import { addtransactiondata,edittransactiondata } from "../../store/slices/Trans
 import { month,transactiontype,fromaccount,toaccount,transaction } from "../../assets/constant/constant";
 import { RootState } from "../../store/index";
 
-
-
-
 export const Addtransaction:React.FC = () => {
 
   const dispatch = useDispatch();
 
   const [addtransaction, setAddtransaction] = useState<any>(transaction);
-
  
   const navigate = useNavigate();
 
 const transactiondata = useSelector((state:RootState)=> state.transactions)
 
-
   var { id } = useParams();
 
   useEffect(() => {
-    
     if (id !== undefined) {
       var editdata =[...transactiondata];
       var idd = id
@@ -68,7 +61,7 @@ const transactiondata = useSelector((state:RootState)=> state.transactions)
       if (typeof value ==="string") {
         return true;
       }else{
-        console.log("sanjjjjjjjjjjjj");
+ 
         return value[0] && (value[0].type === "image/jpg" || value[0].type === "image/jpeg" || value[0].type === "image/png");
       }
     }).test("fileSize", "The file is too large", (value: any | undefined) => {
@@ -114,7 +107,7 @@ function removeimage() {
         data.receipt = url;
   }
 
-if (id) {
+  if (id) {
 
  let editdata = {...data}
     dispatch(edittransactiondata({id:id,data:editdata}))
@@ -126,7 +119,6 @@ if (id) {
     const addid = transactiondata[len-1].id 
     newdata.id = addid+1;
       dispatch(addtransactiondata(newdata))
-
 }
 reset();
 navigate("/alltransaction");
@@ -134,8 +126,7 @@ navigate("/alltransaction");
 
   return (
     <>
- 
-      <div className="finance">
+        <div className="finance">
         <h1 className="addmaindiv"> Finance Tracker</h1>
         <div className="addmaindiv">
           <Link to="/alltransaction"> Alltransaction </Link>
@@ -159,14 +150,15 @@ navigate("/alltransaction");
             )}
           </div>
 
+          
+          
           <br/>
           <div>
             <span className="form__label">Month Year:</span>
             <select
-        
+  
              {...register("month", { required: true })}
             >
-
               {month.map((k) => (
                 <option key={k.label} value={k.value}>
                   {k.label}
@@ -180,9 +172,7 @@ navigate("/alltransaction");
           <div>
             <span className="form__label">Transaction type:</span>
             <select
-          
-           
-              {...register("transactiontype", { required: true })}
+            {...register("transactiontype", { required: true })}
             >
             
               {transactiontype.map((key) => (
@@ -196,14 +186,11 @@ navigate("/alltransaction");
             )}
           </div>
           <br />
-
           <div>
             <span className="form__label">From Account:</span>
             <select
-            
-              {...register("fromaccount", { required: true })}
+             {...register("fromaccount", { required: true })}
             >
-            
               {fromaccount.map((key) => (
                 <option key={key.label} value={key.value}>
                   {key.label}
@@ -222,8 +209,7 @@ navigate("/alltransaction");
             <select
 
               {...register("toaccount", { required: true })}
-            >
-          
+            >          
               {toaccount.map((key) => (
                 <option key={key.label} value={key.value}>
                   {key.label}
@@ -242,10 +228,8 @@ navigate("/alltransaction");
 
             <input
               type="number"
-        
               {...register("amount", { required: true })}
               placeholder="Enter Amount"
-              
             />
             {errors.amount && <p style={{ color: "red" }}>{errors.amount.message?.toString()}</p>}
           </div>
@@ -256,13 +240,10 @@ navigate("/alltransaction");
             </label>
           {addtransaction.receipt===""?( <input
                 type="file"
-          
                 id="fromfile"
-                
                 {...register("receipt", {onChange: async (e) => {
                   let file = await bs(e.target.files[0])
                   const newobj = { ...addtransaction, receipt:file};
-      
                   setAddtransaction(newobj)
                   }})}
               />):( 
@@ -270,7 +251,6 @@ navigate("/alltransaction");
                    <img src={addtransaction.receipt} alt="sde" />
                 <span style={{ color: "red" }} onClick={removeimage} >remove</span></div>)}
               <div>
-             
               {errors.receipt && <p style={{ color: "red" }}>{errors.receipt.message?.toString()}</p>}
               </div>
                        
@@ -281,7 +261,6 @@ navigate("/alltransaction");
             <span className="form__label">Notes:</span>
             <textarea
               placeholder="notes"
-          
               {...register("notes", { required: true })}
             ></textarea>
             {errors.notes && <p style={{ color: "red" }}>{errors.notes.message?.toString()}</p>}
@@ -295,8 +274,6 @@ navigate("/alltransaction");
     </>
   );
 };
-
-
 
 
 

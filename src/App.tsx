@@ -9,10 +9,13 @@ import { BrowserRouter, Navigate } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
+
   return (
+
     <BrowserRouter>
       <Routes>
         <Route path="/">
+
           <Route path="" element={<Navigate to={`/alltransaction`} />} />
 
           <Route path="register" element={<Authentication public={true} cmp={<Register />}/>} />
@@ -21,16 +24,14 @@ function App() {
           
           <Route path="alltransaction">
             <Route path="" element={<Authentication public={false} cmp={<Alltransaction />}/>} />
-
-            <Route path="addtransaction" element={<Authentication public={false} cmp={<Addtransaction />}/>}>
-              <Route path=":id" element={<Authentication public={false} cmp={<Addtransaction />}/>} />
-            </Route>
+            <Route path="edit/:id" element={<Authentication public={false} cmp={<Addtransaction />}/>} />
+              <Route path="addtransaction" element={<Authentication public={false} cmp={<Addtransaction />}/>}/>
             <Route path="View" element={<Authentication public={false} cmp={<View />}/>} />
           </Route>
         </Route>
-      </Routes>
-    
+      </Routes>    
     </BrowserRouter>
+    
   );
 }
 

@@ -10,14 +10,12 @@ import { RootState } from "../store/index";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-
 type RegisterForm = {
     name: string;
     email:string;
     password:string;
     id:Number;
   };
-
 
 export  const Register:React.FC=()=> {
 

@@ -23,9 +23,9 @@ export const Alltransaction:React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        setAlltransaction(transactionalldata);
-    }, []);
+    // useEffect(() => {
+    //     setAlltransaction(transactionalldata);
+    // }, []);
 
 
     useEffect(() => {
@@ -70,9 +70,7 @@ export const Alltransaction:React.FC = () => {
     }
 
     function group(event:any):void {
-
         setGroupvalue(event.target.value)
-             
     }     
 
     return (
@@ -96,11 +94,11 @@ export const Alltransaction:React.FC = () => {
                         ))}
                     </select>
                 </div>
-
+ 
                 <div className="addtransactioninall">
                     <Link className="groupby" to="addtransaction">
-                        {" "}
-                        Addtransaction{" "}
+                       
+                        Addtransaction
                     </Link>
                 </div>
                 <div onClick={Logout} className="addtransactioninall">

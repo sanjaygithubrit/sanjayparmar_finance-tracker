@@ -11,9 +11,13 @@ import { Alltransactiontype } from "../../../assets/constant/constant";
 //     }
 
     interface propstype {
-        all :{}
+        all :Alltransactiontype[]
         deleterecord:any
     }
+    // interface alldatatype {
+    //     alldata :Alltransactiontype[]
+
+    // }
 export const Table = (prop:propstype) => {
 
     const [filterval, setFilval] = useState("");
@@ -39,7 +43,7 @@ export const Table = (prop:propstype) => {
     }
 
     function edit(id:number) {
-        navigate(`/alltransaction/addtransaction/${id}`);
+        navigate(`/alltransaction/edit/${id}`);
     }
    
     function funpage(value:number) {

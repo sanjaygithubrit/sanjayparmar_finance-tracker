@@ -6,7 +6,7 @@ export default function Authentication (props:any) {
 const cmp = props.cmp;
 const ispublic = props.public;
 const auth = document.cookie;
-console.log(ispublic,cmp,auth,"auth");
+
 if (ispublic) {
     if (!auth) {
         return cmp
