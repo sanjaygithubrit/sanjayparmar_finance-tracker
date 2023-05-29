@@ -12,10 +12,9 @@ interface initialtype {
   notes: string;
   }
 
-
  const initialState:initialtype[]  =[{
     id:1,
-    transactiondate: "2023-05-02",
+    transactiondate:"2023-05-02",
     month: "May 2023",
     transactiontype: "Personal Expense",
     fromaccount: "Real Living",

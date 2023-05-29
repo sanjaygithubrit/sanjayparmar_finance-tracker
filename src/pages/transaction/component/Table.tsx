@@ -234,11 +234,11 @@ export const Table = (prop:propstype) => {
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
-                    </thead>
+                    </thead>    
                     <tbody>
                         {alltransaction.map((alltransaction, index) => (
                             <tr key={index}>
-                                <td>{alltransaction.transactiondate}</td>
+                                <td>{alltransaction.transactiondate.toString()}</td>
                                 <td>{alltransaction.month}</td>
                                 <td>{alltransaction.transactiontype}</td>
                                 <td>{alltransaction.fromaccount}</td>

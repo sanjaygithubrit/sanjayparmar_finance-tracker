@@ -37,14 +37,15 @@ const transactiondata = useSelector((state:RootState)=> state.transactions)
       }
       setAddtransaction(value);
     } 
+    
   },[]);
 
   const today = new Date();
 
   let userSchema = yup.object().shape({
-    transactiondate: yup.string()
-    .required("Transaction Date is Required")
-    .max(Number(today) , "Enter Valid Transaction Date"),
+    transactiondate: yup.date()
+    .typeError("Transaction Date is Required")
+    .max(today ,"Enter Valid Transaction Date"),
       month: yup.string().required("Month Year is Required"),
       transactiontype: yup.string().required("Transaction Type is Required"),
       fromaccount: yup.string().required("From Account  is Required"),
@@ -100,6 +101,7 @@ function removeimage() {
 }
 
   const onSubmitHandler = async(data:any) => {
+console.log(data.transactiondate,"transaction date");
 
         if (typeof (data.receipt) !== "string") {
         let url = await bs(data.receipt[0])

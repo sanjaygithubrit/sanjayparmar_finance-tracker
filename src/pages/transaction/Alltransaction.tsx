@@ -29,26 +29,19 @@ export const Alltransaction:React.FC = () => {
 
 
     useEffect(() => {
-        
         setAlltransaction(transactionalldata);
-       
     }, [transactionalldata]);
 
     useEffect(() => {
         setAlltransaction(transactionalldata);
-        if (groupvalue==="") {
-            
-        } else {
+        if (groupvalue!=="") {
                 const groupBy = (array:any, key:any) => {
                 let sanjay = array.reduce((result:any, currentValue:any) => {
-                    (result[currentValue[key]] = result[currentValue[key]] || []).push(
-                        currentValue
-                    );
+                    (result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue);
                     return result;
                 }, []);
                 return sanjay;
             };
-    
             if (groupvalue === "none") {
                 setGrp(false)
             } else {
@@ -57,7 +50,6 @@ export const Alltransaction:React.FC = () => {
                 setGrp(true);
             }
         }
-            
     }, [groupvalue,transactionalldata]);
 
     function Logout() {

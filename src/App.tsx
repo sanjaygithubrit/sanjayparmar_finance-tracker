@@ -7,6 +7,18 @@ import { Addtransaction } from "./pages/transaction/Addtransaction";
 import { View } from "./pages/transaction/component/View";
 import { BrowserRouter, Navigate } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
+
+function Fallback( error:any):any {
+  // Call resetErrorBoundary() to reset the error boundary and retry the render.
+
+  return (
+    <div role="alert">
+      <p>Something went wrong:</p>
+      <pre style={{ color: "red" }}>{error.message}</pre>
+    </div>
+  );
+}
 
 function App() {
 
@@ -18,7 +30,9 @@ function App() {
 
           <Route path="" element={<Navigate to={`/alltransaction`} />} />
 
-          <Route path="register" element={<Authentication public={true} cmp={<Register />}/>} />
+          <Route path="register" element={<ErrorBoundary  FallbackComponent={Fallback}>
+          <Authentication public={true} cmp={<Register />}/>
+          </ErrorBoundary>} />
 
           <Route path="login" element={<Authentication public={true} cmp={<Login />}/>} />
           
